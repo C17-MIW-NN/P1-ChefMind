@@ -19,7 +19,7 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/categories/all")
+    @GetMapping("/category/all")
     private String showCategoryOverview (Model datamodel){
         datamodel.addAttribute("allcategories", categoryRepository.findAll());
         datamodel.addAttribute("newCategory", new Category());

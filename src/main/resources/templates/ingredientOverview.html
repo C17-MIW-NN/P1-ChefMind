@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Ingredients</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <h1>Ingredients</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Ingredient name</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="ingredient : ${allIngredients}">
+            <td><span th:text="${ingredient.ingredientName}"></span></td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>

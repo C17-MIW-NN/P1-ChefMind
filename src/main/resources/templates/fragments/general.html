@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="baseheader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">This is the base title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+</head>
+
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand">ChefMind</a>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/category/all}">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ingredient/all}">Ingredients</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="footer">
+    <footer>
+        <p class="text-center text text-muted">
+            Copyright Assib Pajman, Harm van der Weide & Nelleke Jansen &copy;2025
+        </p>
+    </footer>
+</div>
+
+<div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</div>
+
+</body>
+</html>

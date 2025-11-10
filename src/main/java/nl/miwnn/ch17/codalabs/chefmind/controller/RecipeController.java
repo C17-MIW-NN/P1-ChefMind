@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Assib Pajman
  *
  */
-@RequestMapping("recipe")
 @Controller
+@RequestMapping("/recipe")
 public class RecipeController {
     private final RecipeRepository recipeRepository;
 

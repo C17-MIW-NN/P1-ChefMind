@@ -21,6 +21,9 @@ public class IngredientUse {
     @ManyToOne
     private Ingredient ingredient;
 
+    @ManyToOne
+    private Recipe recipe;
+
     public Long getIngredientUseId() {
         return ingredientUseId;
     }
@@ -43,5 +46,13 @@ public class IngredientUse {
 
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

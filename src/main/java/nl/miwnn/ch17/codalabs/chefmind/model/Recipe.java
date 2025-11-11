@@ -3,6 +3,9 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 /**
  * @author Assib Pajman
@@ -18,6 +21,9 @@ public class Recipe {
     private Integer servingSize;
     private Integer time;
     private String instructions;
+
+    @OneToMany(mappedBy="recipe")
+    private List<IngredientUse> ingredientUses;
 
     public Long getRecipeId() {
         return recipeId;
@@ -57,5 +63,13 @@ public class Recipe {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public List<IngredientUse> getIngredientUses() {
+        return ingredientUses;
+    }
+
+    public void setIngredientUses(List<IngredientUse> ingredientUses) {
+        this.ingredientUses = ingredientUses;
     }
 }

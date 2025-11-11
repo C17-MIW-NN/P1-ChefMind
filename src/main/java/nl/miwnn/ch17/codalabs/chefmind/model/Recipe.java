@@ -1,9 +1,6 @@
 package nl.miwnn.ch17.codalabs.chefmind.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -17,12 +14,13 @@ public class Recipe {
     @Id @GeneratedValue
     private Long recipeId;
 
+    @Column(unique = true)
     private String name;
     private Integer servingSize;
     private Integer time;
     private String instructions;
 
-    @OneToMany(mappedBy="recipe")
+    @OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IngredientUse> ingredientUses;
 
     public Long getRecipeId() {

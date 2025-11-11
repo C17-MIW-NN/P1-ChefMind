@@ -4,8 +4,11 @@ import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Assib Pajman
@@ -23,15 +26,72 @@ public class RecipeController {
     @GetMapping("/all")
     private String showRecipeOverview(Model datamodel, Recipe recipe) {
         datamodel.addAttribute("recipes", recipeRepository.findAll());
-        datamodel.addAttribute("newRecipe", new Recipe());
+        datamodel.addAttribute("formRecipe", new Recipe());
 
         return "recipeOverview";
     }
 
     @GetMapping("/add")
+    public String showRecipeForm(Model datamodel) {
+        return showRecipeForm(datamodel, new Recipe());
+    }
+
+    @GetMapping("/edit/{name}")
+    public String showEditRecipeForm(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> optionalRecipe = recipeRepository.findByName(name);
+
+        if (optionalRecipe.isPresent()) {
+            return showRecipeForm(datamodel, optionalRecipe.get());
+        }
+
+        return "redirect:/recipe/all";
+    }
+
+    @PostMapping("/save")
+    public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
+                                     BindingResult result,
+                                     Model datamodel) {
+        Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
+
+        if (recipeWithSameName.isPresent() &&
+                !recipeWithSameName.get().getRecipeId().equals(recipeToBeSaved.getRecipeId())) {
+            result.addError(new FieldError("recipe",
+                    "name",
+                    "Recipe name already exists"));
+        }
+
+        if (result.hasErrors()) {
+            return showRecipeForm(datamodel, recipeToBeSaved);
+        }
+
+        recipeRepository.save(recipeToBeSaved);
+        return "redirect:/recipe/all";
+    }
+
+    @GetMapping("/delete/{recipeId}")
+    public String deleteRecipe(@PathVariable("recipeId") Long recipeId) {
+        recipeRepository.deleteById(recipeId);
+
+        return "redirect:/recipe/all";
+    }
+
+    @GetMapping("/detail/{name}")
+    public String showRecipeDetailpage(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeToShow = recipeRepository.findByName(name);
+
+        if (recipeToShow.isEmpty()) {
+            return "redirect:/recipe/all";
+        }
+
+        datamodel.addAttribute("recipe", recipeToShow.get());
+
+        return "recipeDetails";
+    }
+
     public String showRecipeForm(Model datamodel, Recipe recipe) {
-        datamodel.addAttribute("newRecipe", new Recipe());
+        datamodel.addAttribute("formRecipe", recipe);
 
         return "recipeForm";
     }
+
 }

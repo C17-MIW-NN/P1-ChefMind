@@ -2,6 +2,7 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class Recipe {
     private String name;
     private Integer servingSize;
     private Integer time;
-    private String instructions;
+    private List<String> instructions;
 
     @OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IngredientUse> ingredientUses;
@@ -55,11 +56,11 @@ public class Recipe {
         this.time = time;
     }
 
-    public String getInstructions() {
+    public List<String> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(String instructions) {
+    public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
     }
 

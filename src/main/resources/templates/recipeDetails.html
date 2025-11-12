@@ -11,7 +11,12 @@
     <div>
         <p>Serving size: <span th:text="${recipe.servingSize}"></span></p>
         <p>Cooking time: <span th:text="${recipe.time}"></span></p>
-        <p>Instructions: <span th:text="${recipe.instructions}"></span></p>
+        <p>Instructions: </p>
+        <ol>
+            <li th:each="instruction: ${recipe.instructions}"
+                th:if="${!#strings.isEmpty(instruction)}"
+                th:text="${instruction}"></li>
+        </ol>
     </div>
 
     <table>

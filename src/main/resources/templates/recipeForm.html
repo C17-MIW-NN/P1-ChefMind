@@ -12,7 +12,7 @@
         <input type="hidden" th:field="*{recipeId}">
 
         <div>
-            Recipe name: <input type="text" th:field="*{name}">
+            Recipe name: <input type="text" th:field="*{name}" required>
         </div>
         <div>
             Serving size: <input type="text" th:field="*{servingSize}">
@@ -21,7 +21,10 @@
             Cooking time: <input type="text" th:field="*{time}">
         </div>
         <div>
-            Instructions: <input type="text" th:field="*{instructions}">
+            Instructions:
+        </div>
+        <div th:each="i : ${#numbers.sequence(0,4)}">
+            <input type="text" th:field="*{instructions[__${i}__]}">
         </div>
 
         <input type="submit" value="Save recipe">

@@ -12,6 +12,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Nelleke Jansen
  * Initializes the database with example data.
@@ -141,12 +144,14 @@ public class InitializeController {
     }
 
     private Recipe makeRecipe(String name, Integer servingSize, Integer time, String instructions) {
+        List<String> instructionList = new ArrayList<>();
+        instructionList.add(instructions);
         Recipe recipe = new Recipe();
 
         recipe.setName(name);
         recipe.setServingSize(servingSize);
         recipe.setTime(time);
-        recipe.setInstructions(instructions);
+        recipe.setInstructions(instructionList);
 
         recipeRepository.save(recipe);
 

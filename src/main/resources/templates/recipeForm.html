@@ -24,11 +24,31 @@
         <div>
             Instructions:
         </div>
-        <div th:each="i : ${#numbers.sequence(0,4)}">
-            <input type="text" th:field="*{instructions[__${i}__]}">
-        </div>
+<!--        <div th:each="i : ${#numbers.sequence(0,4)}">-->
+<!--            <input type="text" th:field="*{instructions[__${i}__]}">-->
+<!--        </div>-->
 
-        <input class="btn button-custom" type="submit" value="Save recipe">
+        <div id="instructions"></div>
+
+        <button type="button" onclick="addInput()">Add a step</button>
+
+        <script>
+            let count = 0;
+
+            function addInput() {
+                const instructionSteps = document.getElementById("instructions");
+
+                const step = document.createElement("input");
+                step.type = "text";
+                step.placeholder = `Step ${count + 1}`;
+
+                instructionSteps.appendChild(step);
+                instructionSteps.appendChild(document.createElement("br"));
+
+                count++;
+            }
+        </script>
+        <div><input class="btn button-custom" type="submit" value="Save recipe"></div>
     </form>
 
     <div th:replace="~{fragments/general :: footer}"></div>

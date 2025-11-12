@@ -19,15 +19,6 @@
     <div class="recipe-part">
         <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
         <p><b>Cooking time:</b> <span th:text="${recipe.time}"></span></p>
-    <div>
-        <p>Serving size: <span th:text="${recipe.servingSize}"></span></p>
-        <p>Cooking time: <span th:text="${recipe.time}"></span></p>
-        <p>Instructions: </p>
-        <ol>
-            <li th:each="instruction: ${recipe.instructions}"
-                th:if="${!#strings.isEmpty(instruction)}"
-                th:text="${instruction}"></li>
-        </ol>
     </div>
 
     <div class="recipe-part">
@@ -49,7 +40,12 @@
     </div>
 
     <div class="recipe-part">
-        <p><b>Instructions:</b> <span th:text="${recipe.instructions}"></span></p>
+        <p><b>Instructions:</b></p>
+        <ol>
+            <li th:each="instruction: ${recipe.instructions}"
+                th:if="${!#strings.isEmpty(instruction)}"
+                th:text="${instruction}"></li>
+        </ol>
     </div>
 
     <div th:replace="~{fragments/general :: footer}"></div>

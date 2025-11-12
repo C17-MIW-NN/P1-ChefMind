@@ -28,7 +28,10 @@
         </tbody>
     </table>
 
-    <a th:href="@{/recipe/add}" th:class="button-custom">Add a new recipe</a>
+    <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
+        Recipe name: <input type="text" th:field="*{name}">
+        <input class="btn button-custom" type="submit" value="Add new recipe">
+    </form>
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>

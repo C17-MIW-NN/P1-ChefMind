@@ -6,7 +6,8 @@
 <body>
     <div th:replace="~{fragments/general :: navbar}"></div>
 
-    <h1>Add a new recipe</h1>
+    <h1 th:if="${formRecipe.recipeId == null}">Add a new recipe</h1>
+    <h1 th:unless="${formRecipe.recipeId == null}" th:text="|Edit ${formRecipe.name}|"></h1>
 
     <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}">
         <input type="hidden" th:field="*{recipeId}">
@@ -18,7 +19,7 @@
             Serving size: <input type="text" th:field="*{servingSize}">
         </div>
         <div>
-            Cooking time: <input type="text" th:field="*{time}">
+            Cooking time: <input type="text" th:field="*{time}"> minutes
         </div>
         <div>
             Instructions:

@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-
+<head     th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Your Categories</title>
 </head>
 
 <body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
 <h1>Overview of your Categories</h1>
 
-<h2>Add new category:</h2>
-<flex>
-</flex>
+<!--<form th:action="@{category/add}" method="get" th:object="${newCategory}">-->
+
+<!--    <input type="text" th:field="$*{categoryName}">-->
+<!--    <input type="submit" value="add">-->
+
+<!--</form>-->
+
 
 <table>
     <th>
         <td>Title</td>
     </th>
 
-    <tr th:each="category : ${categories}">
-        <td th:text="${category.categoryId}"></td>
+    <tr th:each="category : ${allCategories}">
+        <td th:text="${category.categoryName}"></td>
     </tr>
 </table>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
 
 </body>
 </html>

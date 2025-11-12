@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Recipes</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe details</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+    <link rel="stylesheet" type="text/css" href="/css/recipedetails.css" />
 </head>
+
 <body>
     <div th:replace="~{fragments/general :: navbar}"></div>
 
     <h1><span th:text="${recipe.name}"></span></h1>
 
+    <div class="recipe-part">
+        <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
+        <p><b>Cooking time:</b> <span th:text="${recipe.time}"></span></p>
     <div>
         <p>Serving size: <span th:text="${recipe.servingSize}"></span></p>
         <p>Cooking time: <span th:text="${recipe.time}"></span></p>
@@ -19,19 +30,26 @@
         </ol>
     </div>
 
-    <table>
-        <thead>
+    <div class="recipe-part">
+        <table>
+            <thead>
             <tr>
-                <td>Ingredient</td>
-                <td>Amount</td>
+                <th scope="col">Ingredient</th>
+                <th scope="col">Amount</th>
             </tr>
-        </thead>
+            </thead>
 
-        <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
-            <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
-            <td th:text="${ingredientUse.amount}"></td>
-        </tr>
-    </table>
+            <tbody>
+            <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
+                <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
+                <td th:text="${ingredientUse.amount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="recipe-part">
+        <p><b>Instructions:</b> <span th:text="${recipe.instructions}"></span></p>
     </div>
 
     <div th:replace="~{fragments/general :: footer}"></div>

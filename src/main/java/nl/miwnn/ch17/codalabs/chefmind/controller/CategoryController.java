@@ -1,14 +1,12 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
 import nl.miwnn.ch17.codalabs.chefmind.model.Category;
-import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
 /**

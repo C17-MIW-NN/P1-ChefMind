@@ -1,4 +1,7 @@
 body {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     background-color: #F6F1EC;
     color: #064119;
     padding-left: 2.5rem;

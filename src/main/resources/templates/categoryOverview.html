@@ -9,15 +9,15 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<h1>Overview of your Categories</h1>
+<h1>Categories</h1>
 
-<!--<form th:action="@{category/add}" method="get" th:object="${newCategory}">-->
+<form th:action="@{/category/new}" method="post" th:object="${formCategory}">
+    <input type="hidden" th:field="*{categoryId}">
 
-<!--    <input type="text" th:field="$*{categoryName}">-->
-<!--    <input type="submit" value="add">-->
+    <input type="text" th:field="*{categoryName}">
+    <input type="submit" value="add">
 
-<!--</form>-->
-
+</form>
 
 <table>
     <th>
@@ -28,8 +28,6 @@
         <td th:text="${category.categoryName}"></td>
     </tr>
 </table>
-
-<a th:href="@{/category/add}" th:class="button-custom">Add a new category</a>
 
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>

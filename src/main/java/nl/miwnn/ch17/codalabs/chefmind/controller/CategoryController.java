@@ -24,9 +24,9 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    private String showCategoryOverview (Model datamodel, Category category){
+    public String showCategoryOverview (Model datamodel, Category category){
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
-        datamodel.addAttribute("newCategory", new Category());
+        datamodel.addAttribute("formCategory", new Category());
 
         return "categoryOverview";
     }
@@ -34,6 +34,28 @@ public class CategoryController {
     @GetMapping("/add")
     public String showCategoryForm(Model datamodel) {
         return showCategoryForm(datamodel, new Category());
+    }
+
+    @PostMapping("/new")
+    public String saveNewCategory (@ModelAttribute("formCategory") Category categoryToBeSaved,
+                                   BindingResult result,
+                                   Model datamodel) {
+        Optional<Category> categoryWithSameName =
+                categoryRepository.findByCategoryName(categoryToBeSaved.getCategoryName());
+
+        if (categoryWithSameName.isPresent() &&
+                !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
+            result.addError(new FieldError("formCategory",
+                    "categoryName",
+                    "Category name already exists"));
+        }
+
+        if (result.hasErrors()) {
+            return showCategoryForm(datamodel, categoryToBeSaved);
+        }
+
+        categoryRepository.save(categoryToBeSaved);
+        return "redirect:/category/all";
     }
 
     @PostMapping("/save")
@@ -45,8 +67,8 @@ public class CategoryController {
 
         if (categoryWithSameName.isPresent() &&
                 !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
-            result.addError(new FieldError("Category",
-                    "name",
+            result.addError(new FieldError("formCategory",
+                    "categoryName",
                     "Category name already exists"));
         }
 

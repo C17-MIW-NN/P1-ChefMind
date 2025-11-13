@@ -1,6 +1,7 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ import java.util.Optional;
 @RequestMapping("/recipe")
 public class RecipeController {
     private final RecipeRepository recipeRepository;
+    private final CategoryRepository categoryRepository;
 
-    public RecipeController(RecipeRepository recipeRepository) {
+    public RecipeController(RecipeRepository recipeRepository, CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/all")
@@ -108,6 +111,7 @@ public class RecipeController {
 
     public String showRecipeForm(Model datamodel, Recipe recipe) {
         datamodel.addAttribute("formRecipe", recipe);
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
         return "recipeForm";
     }

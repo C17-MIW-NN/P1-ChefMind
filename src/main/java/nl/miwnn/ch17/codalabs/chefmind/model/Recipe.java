@@ -28,6 +28,7 @@ public class Recipe {
     private List<IngredientUse> ingredientUses;
 
     @ManyToMany
+    @OrderBy("categoryName ASC")
     private Set<Category> categories;
 
     public Long getRecipeId() {

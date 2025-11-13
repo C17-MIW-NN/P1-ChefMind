@@ -22,6 +22,15 @@
             Cooking time: <input type="text" th:field="*{time}"> minutes
         </div>
         <div>
+            Categories:
+            <select th:field="${formRecipe.categories}" multiple>
+                <option th:each="category : ${allCategories}"
+                        th:text="${category.categoryName}"
+                        th:value="${category.categoryId}">
+                </option>
+            </select>
+        </div>
+        <div>
             Instructions:
         </div>
         <div th:each="existingInstruction, iteration : *{instructions}">

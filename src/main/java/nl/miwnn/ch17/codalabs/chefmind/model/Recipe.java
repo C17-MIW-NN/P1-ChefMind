@@ -2,7 +2,6 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

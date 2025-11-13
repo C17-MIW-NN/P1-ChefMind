@@ -80,6 +80,8 @@ public class RecipeController {
             return showRecipeForm(datamodel, recipeToBeSaved);
         }
 
+
+
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
     }

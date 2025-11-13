@@ -24,26 +24,29 @@
         <div>
             Instructions:
         </div>
-<!--        <div th:each="i : ${#numbers.sequence(0,4)}">-->
-<!--            <input type="text" th:field="*{instructions[__${i}__]}">-->
-<!--        </div>-->
+        <div th:each="existingInstruction, iteration : *{instructions}">
+            <input type="text"
+                   th:field="*{instructions[__${iteration.index}__]}"
+                   th:placeholder="'Step ' + ${iteration.index + 1}">
+        </div>
 
-        <div id="instructions"></div>
+        <div id="addedInstructions" th:attr="data-count=${#lists.size(formRecipe.instructions)}"></div>
 
         <button type="button" onclick="addInput()">Add a step</button>
 
         <script>
-            let count = 0;
+            const addedInstructions = document.getElementById("addedInstructions");
+            let count = parseInt(addedInstructions.dataset.count);
 
             function addInput() {
-                const instructionSteps = document.getElementById("instructions");
 
                 const step = document.createElement("input");
                 step.type = "text";
                 step.placeholder = `Step ${count + 1}`;
+                step.name = `instructions[${count}]`
 
-                instructionSteps.appendChild(step);
-                instructionSteps.appendChild(document.createElement("br"));
+                addedInstructions.appendChild(step);
+                addedInstructions.appendChild(document.createElement("br"));
 
                 count++;
             }

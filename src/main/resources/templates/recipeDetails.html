@@ -19,6 +19,10 @@
     <div class="recipe-part">
         <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
         <p><b>Cooking time:</b> <span th:text="${recipe.time}"></span></p>
+        <p><b>Categories:</b>
+            <span th:each="category : ${recipe.categories}">
+                <span th:text="${category.categoryName}"></span>
+            </span></p>
     </div>
 
     <div class="recipe-part">

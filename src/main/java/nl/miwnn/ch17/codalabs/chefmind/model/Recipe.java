@@ -3,6 +3,7 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Assib Pajman
@@ -25,6 +26,10 @@ public class Recipe {
 
     @OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IngredientUse> ingredientUses;
+
+    @ManyToMany
+    @OrderBy("categoryName ASC")
+    private Set<Category> categories;
 
     public Long getRecipeId() {
         return recipeId;
@@ -72,5 +77,13 @@ public class Recipe {
 
     public void setIngredientUses(List<IngredientUse> ingredientUses) {
         this.ingredientUses = ingredientUses;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

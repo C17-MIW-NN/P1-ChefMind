@@ -22,6 +22,15 @@
             Cooking time: <input type="text" th:field="*{time}"> minutes
         </div>
 
+        <div>
+            Categories:
+            <select th:field="${formRecipe.categories}" multiple>
+                <option th:each="category : ${allCategories}"
+                        th:text="${category.categoryName}"
+                        th:value="${category.categoryId}">
+                </option>
+            </select>
+        </div>
         <br>
 
         <div>
@@ -47,62 +56,27 @@
         <div>
             Instructions:
         </div>
-        <div th:each="existingInstruction, iteration : *{instructions}">
-            <input type="text"
-                   th:field="*{instructions[__${iteration.index}__]}"
-                   th:placeholder="'Step ' + ${iteration.index + 1}">
+            <div id="existingInstructions"><div th:each="existingInstruction, iteration : *{instructions}">
+                <div>
+                    <input type="text"
+                           th:field="*{instructions[__${iteration.index}__]}"
+                           th:placeholder="'Next step'">
+                    <button type="button" class="removeButton">remove</button>
+                </div>
+            </div>
         </div>
 
         <div id="addedInstructions" th:attr="data-count=${#lists.size(formRecipe.instructions)}"></div>
 
         <button type="button" onclick="addInput()">Add a step</button>
 
-        <script>
-            const addedInstructions = document.getElementById("addedInstructions");
-            let count = parseInt(addedInstructions.dataset.count);
 
-            function addInput() {
-
-                const step = document.createElement("input");
-                step.type = "text";
-                step.placeholder = `Step ${count + 1}`;
-                step.name = `instructions[${count}]`
-
-                addedInstructions.appendChild(step);
-                addedInstructions.appendChild(document.createElement("br"));
-
-                count++;
-            }
-        </script>
         <div><input class="btn button-custom" type="submit" value="Save recipe"></div>
     </form>
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const ingredientsContainer = document.getElementById("ingredients");
-            const addButton = document.getElementById("addIngredient");
-
-            addButton.addEventListener("click", function () {
-                const div = document.createElement("div");
-                div.classList.add("ingredient");
-                div.innerHTML = `
-      <input type="text" name="ingredientNames[]" placeholder="Ingredient">
-      <input type="text" name="amounts[]" placeholder="Amount">
-      <button type="button" class="remove">Remove</button>
-    `;
-                ingredientsContainer.appendChild(div);
-            });
-
-            ingredientsContainer.addEventListener("click", function (e) {
-                if (e.target.classList.contains("remove")) {
-                    e.target.closest(".ingredient").remove();
-                }
-            });
-        });
-    </script>
-
+    <script src="/js/recipeForm.js"></script>
 </body>
 </html>

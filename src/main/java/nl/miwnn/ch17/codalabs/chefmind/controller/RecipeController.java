@@ -5,6 +5,7 @@ import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientUseRepository;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +27,18 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
     private final IngredientUseRepository ingredientUseRepository;
+    private final CategoryRepository categoryRepository;
 
-    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, IngredientUseRepository ingredientUseRepository) {
+    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
+                            IngredientUseRepository ingredientUseRepository, CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.ingredientUseRepository = ingredientUseRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/all")
-    private String showRecipeOverview(Model datamodel, Recipe recipe) {
+    public String showRecipeOverview(Model datamodel, Recipe recipe) {
         datamodel.addAttribute("recipes", recipeRepository.findAll());
         datamodel.addAttribute("formRecipe", new Recipe());
 
@@ -92,7 +96,6 @@ public class RecipeController {
             return showRecipeForm(datamodel, recipeToBeSaved);
         }
 
-        // hier iets doen om bestaande ingredient uses op te halen uit bestaand recipe
         List<IngredientUse> ingredientUses = new ArrayList<>();
 
         for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
@@ -121,6 +124,14 @@ public class RecipeController {
 
         recipeToBeSaved.setIngredientUses(ingredientUses);
 
+        List<String> list = new ArrayList<>();
+        for (String instruction : recipeToBeSaved.getInstructions()) {
+            if (instruction != "") {
+                list.add(instruction);
+            }
+        }
+        recipeToBeSaved.setInstructions(list);
+
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
     }
@@ -147,6 +158,7 @@ public class RecipeController {
 
     public String showRecipeForm(Model datamodel, Recipe recipe) {
         datamodel.addAttribute("formRecipe", recipe);
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
         return "recipeForm";
     }

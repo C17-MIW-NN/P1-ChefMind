@@ -25,7 +25,7 @@
             Instructions:
         </div>
             <div id="existingInstructions"><div th:each="existingInstruction, iteration : *{instructions}">
-                <div class="inputContainer">
+                <div>
                     <input type="text"
                            th:field="*{instructions[__${iteration.index}__]}"
                            th:placeholder="'Next step'">
@@ -39,45 +39,13 @@
 
         <button type="button" onclick="addInput()">Add a step</button>
 
-        <script>
-            const addedInstructions = document.getElementById("addedInstructions");
-            const existingInstructions = document.getElementById("existingInstructions")
 
-            addedInstructions.addEventListener("click", removeClick)
-            existingInstructions.addEventListener("click", removeClick)
-
-            function removeClick(e) {
-                if (e.target.classList.contains("removeButton")) {
-                    e.target.parentElement.remove();
-                }
-            }
-
-            let count = parseInt(addedInstructions.dataset.count);
-
-            function addInput() {
-                const container = document.createElement("div")
-
-                const input = document.createElement("input");
-                input.type = "text";
-                input.placeholder = "Next step";
-                input.name = `instructions[${count}]`
-
-                const removeButton = document.createElement("button")
-                removeButton.type = "button"
-                removeButton.textContent = "remove"
-                removeButton.className = "removeButton"
-
-                addedInstructions.append(container)
-                container.append(input, removeButton, document.createElement("br"));
-
-                count++;
-            }
-        </script>
         <div><input class="btn button-custom" type="submit" value="Save recipe"></div>
     </form>
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
+    <script src="/js/recipeForm.js"></script>
 </body>
 </html>

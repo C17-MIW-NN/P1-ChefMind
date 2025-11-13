@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,7 +26,7 @@ public class RecipeController {
     }
 
     @GetMapping("/all")
-    private String showRecipeOverview(Model datamodel, Recipe recipe) {
+    public String showRecipeOverview(Model datamodel, Recipe recipe) {
         datamodel.addAttribute("recipes", recipeRepository.findAll());
         datamodel.addAttribute("formRecipe", new Recipe());
 
@@ -80,6 +82,15 @@ public class RecipeController {
             return showRecipeForm(datamodel, recipeToBeSaved);
         }
 
+        List<String> list = new ArrayList<>();
+
+        for (String instruction : recipeToBeSaved.getInstructions()) {
+            if (instruction != "") {
+                list.add(instruction);
+            }
+        }
+
+        recipeToBeSaved.setInstructions(list);
 
 
         recipeRepository.save(recipeToBeSaved);

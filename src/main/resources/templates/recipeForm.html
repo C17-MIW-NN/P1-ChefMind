@@ -24,11 +24,16 @@
         <div>
             Instructions:
         </div>
-        <div th:each="existingInstruction, iteration : *{instructions}">
-            <input type="text"
-                   th:field="*{instructions[__${iteration.index}__]}"
-                   th:placeholder="'Step ' + ${iteration.index + 1}">
+            <div id="existingInstructions"><div th:each="existingInstruction, iteration : *{instructions}">
+                <div class="inputContainer">
+                    <input type="text"
+                           th:field="*{instructions[__${iteration.index}__]}"
+                           th:placeholder="'Next step'">
+                    <button type="button" class="removeButton">remove</button>
+                </div>
+            </div>
         </div>
+
 
         <div id="addedInstructions" th:attr="data-count=${#lists.size(formRecipe.instructions)}"></div>
 
@@ -36,17 +41,34 @@
 
         <script>
             const addedInstructions = document.getElementById("addedInstructions");
+            const existingInstructions = document.getElementById("existingInstructions")
+
+            addedInstructions.addEventListener("click", removeClick)
+            existingInstructions.addEventListener("click", removeClick)
+
+            function removeClick(e) {
+                if (e.target.classList.contains("removeButton")) {
+                    e.target.parentElement.remove();
+                }
+            }
+
             let count = parseInt(addedInstructions.dataset.count);
 
             function addInput() {
+                const container = document.createElement("div")
 
-                const step = document.createElement("input");
-                step.type = "text";
-                step.placeholder = `Step ${count + 1}`;
-                step.name = `instructions[${count}]`
+                const input = document.createElement("input");
+                input.type = "text";
+                input.placeholder = "Next step";
+                input.name = `instructions[${count}]`
 
-                addedInstructions.appendChild(step);
-                addedInstructions.appendChild(document.createElement("br"));
+                const removeButton = document.createElement("button")
+                removeButton.type = "button"
+                removeButton.textContent = "remove"
+                removeButton.className = "removeButton"
+
+                addedInstructions.append(container)
+                container.append(input, removeButton, document.createElement("br"));
 
                 count++;
             }

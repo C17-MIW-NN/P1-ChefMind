@@ -21,6 +21,53 @@
         <div>
             Cooking time: <input type="text" th:field="*{time}"> minutes
         </div>
+
+        <br>
+
+        <div>Existing Ingredients:</div>
+        <div>
+            <li th:each="ingredientUse : *{ingredientUses}">
+            <span th:text="${ingredientUse.ingredient.ingredientName}"></span>
+            (<span th:text="${ingredientUse.amount}"></span>)
+            </li>
+        </div>
+
+        <div>
+            New ingredients:
+        </div>
+        <div id="ingredients">
+            <div class="ingredient">
+                <input type="text" name="ingredientNames[]" placeholder="Ingredient">
+                <input type="text" name="amounts[]" placeholder="Amount">
+                <button type="button" class="remove">Remove</button>
+            </div>
+        </div>
+
+        <button type="button" onclick="addIngredient()">Add another ingredient</button>
+        <br><br>
+
+        <script>
+            document.getElementById('addIngredient').addEventListener('click', addIngredient);
+            document.getElementById('ingredients').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove')) {
+                    e.target.parentElement.remove();
+                }
+            });
+
+            function addIngredient() {
+                const container = document.getElementById('ingredients');
+                const div = document.createElement('div');
+                div.classList.add('ingredient');
+                div.innerHTML = `
+                  <input type="text" name="ingredientNames[]" placeholder="Ingredient">
+                  <input type="text" name="amounts[]" placeholder="Amount">
+                  <button type="button" class="remove">Remove</button>
+                `;
+                container.appendChild(div);
+            }
+        </script>
+
+
         <div>
             Instructions:
         </div>

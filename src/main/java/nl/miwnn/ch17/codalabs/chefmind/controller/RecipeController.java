@@ -1,6 +1,10 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
+import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
+import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientUseRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,9 +24,13 @@ import java.util.Optional;
 @RequestMapping("/recipe")
 public class RecipeController {
     private final RecipeRepository recipeRepository;
+    private final IngredientRepository ingredientRepository;
+    private final IngredientUseRepository ingredientUseRepository;
 
-    public RecipeController(RecipeRepository recipeRepository) {
+    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, IngredientUseRepository ingredientUseRepository) {
         this.recipeRepository = recipeRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.ingredientUseRepository = ingredientUseRepository;
     }
 
     @GetMapping("/all")
@@ -65,6 +75,8 @@ public class RecipeController {
 
     @PostMapping("/save")
     public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
+                                     @RequestParam("ingredientNames[]") List<String> ingredientNames,
+                                     @RequestParam("amounts[]") List<String> amounts,
                                      BindingResult result,
                                      Model datamodel) {
         Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
@@ -80,7 +92,34 @@ public class RecipeController {
             return showRecipeForm(datamodel, recipeToBeSaved);
         }
 
+        // hier iets doen om bestaande ingredient uses op te halen uit bestaand recipe
+        List<IngredientUse> ingredientUses = new ArrayList<>();
 
+        for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
+            String ingredientName = ingredientNames.get(ingredientIndex);
+            String amount = amounts.size() > ingredientIndex ? amounts.get(ingredientIndex) : "";
+
+            IngredientUse use = new IngredientUse();
+
+            Optional<Ingredient> optionalIngredient = ingredientRepository.findByIngredientName(ingredientName);
+            if (optionalIngredient.isPresent()) {
+                use.setIngredient(optionalIngredient.get());
+            } else {
+                Ingredient ingredient = new Ingredient();
+                ingredient.setIngredientName(ingredientName);
+                ingredientRepository.save(ingredient);
+                use.setIngredient(ingredient);
+            }
+
+            use.setAmount(amount);
+            use.setRecipe(recipeToBeSaved);
+
+            ingredientUseRepository.save(use);
+
+            ingredientUses.add(use);
+        }
+
+        recipeToBeSaved.setIngredientUses(ingredientUses);
 
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();

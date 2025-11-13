@@ -20,10 +20,6 @@
 </form>
 
 <table>
-    <th>
-        <td>Title</td>
-    </th>
-
     <tr th:each="category : ${allCategories}">
         <td th:text="${category.categoryName}"></td>
     </tr>

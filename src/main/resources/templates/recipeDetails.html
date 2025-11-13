@@ -16,6 +16,13 @@
 
     <h1><span th:text="${recipe.name}"></span></h1>
 
+    <a class="btn button-custom" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
+        <i class="bi bi-pencil-fill"></i> Edit
+    </a>
+    <a class="btn button-custom" th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">
+        <i class="bi bi-trash-fill"></i> Remove
+    </a>
+
     <div class="recipe-part">
         <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
         <p><b>Cooking time:</b> <span th:text="${recipe.time}"></span></p>
@@ -41,8 +48,6 @@
             </tr>
             </tbody>
         </table>
-
-        <a class="btn button-custom" th:href="@{/ingredientuse/add}">Add new ingredient use</a>
     </div>
 
     <div class="recipe-part">

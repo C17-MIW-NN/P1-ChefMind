@@ -1,10 +1,11 @@
 package nl.miwnn.ch17.codalabs.chefmind.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+/**
+ * @author Harm van der Weide
+ * A label that catagorises the recipe.
+ */
 @Entity
 public class Category {
 
@@ -29,4 +30,9 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+//    @Override
+//    public String toString() {
+//        return categoryName;
+//    }
 }

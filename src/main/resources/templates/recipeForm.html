@@ -41,30 +41,8 @@
             </div>
         </div>
 
-        <button type="button" onclick="addIngredient()">Add another ingredient</button>
+        <button type="button" id="addIngredient">Add another ingredient</button>
         <br><br>
-
-        <script>
-            document.getElementById('addIngredient').addEventListener('click', addIngredient);
-            document.getElementById('ingredients').addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove')) {
-                    e.target.parentElement.remove();
-                }
-            });
-
-            function addIngredient() {
-                const container = document.getElementById('ingredients');
-                const div = document.createElement('div');
-                div.classList.add('ingredient');
-                div.innerHTML = `
-                  <input type="text" name="ingredientNames[]" placeholder="Ingredient">
-                  <input type="text" name="amounts[]" placeholder="Amount">
-                  <button type="button" class="remove">Remove</button>
-                `;
-                container.appendChild(div);
-            }
-        </script>
-
 
         <div>
             Instructions:
@@ -101,6 +79,30 @@
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ingredientsContainer = document.getElementById("ingredients");
+            const addButton = document.getElementById("addIngredient");
+
+            addButton.addEventListener("click", function () {
+                const div = document.createElement("div");
+                div.classList.add("ingredient");
+                div.innerHTML = `
+      <input type="text" name="ingredientNames[]" placeholder="Ingredient">
+      <input type="text" name="amounts[]" placeholder="Amount">
+      <button type="button" class="remove">Remove</button>
+    `;
+                ingredientsContainer.appendChild(div);
+            });
+
+            ingredientsContainer.addEventListener("click", function (e) {
+                if (e.target.classList.contains("remove")) {
+                    e.target.closest(".ingredient").remove();
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

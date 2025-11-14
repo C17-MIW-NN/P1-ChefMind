@@ -84,7 +84,7 @@ public class InitializeController {
         Ingredient chocolateChips = makeIngredient("chocolate chips");
 
         Recipe cheeseSandwich = makeRecipe("Cheese sandwich", 1, 5,
-                "Cut slices of cheese with a cheese slicer. Place the cheese on a piece of bread. " +
+                "Cut slices of cheese with a cheese slicer.;Place the cheese on a piece of bread.;" +
                         "Top off with another piece of bread. Voilà!",
                 "https://assets-jpcust.jwpsrv.com/thumbnails/MOT2ZB2B-1280.jpg", lunch);
         makeIngredientUse(cheeseSandwich, cheese, "2 slices");
@@ -92,8 +92,10 @@ public class InitializeController {
 
         Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", 4, 45,
                 "Sauté onion, garlic, and minced beef until browned. " +
-                        "Add tomato paste, crushed tomatoes, herbs, salt, and pepper. Simmer 30 minutes. " +
-                        "Serve over cooked spaghetti and top with Parmesan.", "image", dinner, italian);
+                        "Add tomato paste, crushed tomatoes, herbs, salt, and pepper.;Simmer 30 minutes.;" +
+                        "Serve over cooked spaghetti and top with Parmesan.",
+                "https://supervalu.ie/image/var/files/real-food/recipes/Uploaded-2020/" +
+                        "spaghetti-bolognese-recipe.jpg", dinner, italian);
         makeIngredientUse(spaghettiBolognese, onion, "1");
         makeIngredientUse(spaghettiBolognese, garlic, "2 cloves");
         makeIngredientUse(spaghettiBolognese, salt, "to taste");
@@ -103,8 +105,11 @@ public class InitializeController {
         makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons");
 
         Recipe vegetableSoup = makeRecipe("Vegetable soup", 6, 40,
-                "Sauté onion, carrot, and celery. Add diced tomatoes, broth, and seasonings. " +
-                        "Simmer until vegetables are tender. Adjust salt and pepper before serving.", "image",
+                "Sauté onion, carrot, and celery.;Add diced tomatoes, broth, and seasonings.;" +
+                        "Simmer until vegetables are tender.;Adjust salt and pepper before serving.",
+                "https://www.allrecipes.com/thmb/wYELcGueAb7YS20dQ95t22T1CDs=/" +
+                        "0x512/filters:no_upscale():max_bytes(150000):strip_icc()/" +
+                        "13338-quick-and-easy-vegetable-soup-DDMFS-4x3-402702f59e7a41519515cecccaba1b80.jpg",
                 lunch, soups, vegetarian);
         makeIngredientUse(vegetableSoup, onion, "1");
         makeIngredientUse(vegetableSoup, carrot, "3");
@@ -112,9 +117,10 @@ public class InitializeController {
         makeIngredientUse(vegetableSoup, broth, "1 liter");
 
         Recipe pancakes = makeRecipe("Pancakes", 4, 20,
-                "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter. " +
-                        "Cook on a greased pan until bubbles form. Flip and cook until golden. Serve with syrup.",
-                "image",
+                "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter.;" +
+                        "Cook on a greased pan until bubbles form.;Flip and cook until golden.;Serve with syrup.",
+                "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
+                        "bdbc3ce86f919fb2dcf45204579802a8/Derivates/596b2aed41a777a097e3dd5917f8381d557e0ee7.jpg",
                 breakfast);
         makeIngredientUse(pancakes, flour, "150g");
         makeIngredientUse(pancakes, bakingPowder, "10g");
@@ -122,8 +128,11 @@ public class InitializeController {
         makeIngredientUse(pancakes, egg, "1");
 
         Recipe chocolateChipCookies = makeRecipe("Chocolate chip cookies", 24, 25,
-                "Mix butter, sugar, and egg. Add flour, baking powder, and chocolate chips. " +
-                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "image", cookies, favourites);
+                "Mix butter, sugar, and egg.;Add flour, baking powder, and chocolate chips.;" +
+                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "https://www.allrecipes" +
+                        ".com/thmb/dNzzgeEyacuH-RIfMI4PjWFODBM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc" +
+                        "()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
+                        "ddmfs-4x3-614164ea044a4845b3cca7e725ecf7bd.jpg", cookies, favourites);
         makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams");
     }
 
@@ -148,8 +157,9 @@ public class InitializeController {
 
     private Recipe makeRecipe(String name, Integer servingSize, Integer time,
                               String instructions, String image, Category ... categories) {
-        List<String> instructionList = new ArrayList<>();
-        instructionList.add(instructions);
+        String[] parts = instructions.split(";");
+        List<String> instructionList = new ArrayList<>(Arrays.asList(parts));
+
         Recipe recipe = new Recipe();
 
         recipe.setName(name);

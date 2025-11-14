@@ -19,7 +19,8 @@ public class Recipe {
     private String name;
     private Integer servingSize;
     private Integer time;
-    private String image;
+    private String image =
+            "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
 
     @ElementCollection
     @Column(columnDefinition = "TEXT")

@@ -124,14 +124,6 @@ public class RecipeController {
 
         recipeToBeSaved.setIngredientUses(ingredientUses);
 
-        List<String> list = new ArrayList<>();
-        for (String instruction : recipeToBeSaved.getInstructions()) {
-            if (instruction != "") {
-                list.add(instruction);
-            }
-        }
-        recipeToBeSaved.setInstructions(list);
-
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
     }

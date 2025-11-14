@@ -79,8 +79,8 @@ public class RecipeController {
 
     @PostMapping("/save")
     public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
-                                     @RequestParam("ingredientNames[]") List<String> ingredientNames,
-                                     @RequestParam("amounts[]") List<String> amounts,
+                                     @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
+                                     @RequestParam(value = "amounts[]", required = false) List<String> amounts,
                                      BindingResult result,
                                      Model datamodel) {
         Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
@@ -97,6 +97,10 @@ public class RecipeController {
         }
 
         List<IngredientUse> ingredientUses = new ArrayList<>();
+
+        if (ingredientNames == null) {
+            ingredientNames = new ArrayList<>();
+        }
 
         for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
             String ingredientName = ingredientNames.get(ingredientIndex);

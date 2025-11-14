@@ -8,10 +8,3 @@ body {
 h1 {
     min-width: 100%;
 }
-
-.recipe-part {
-    border-style: solid;
-    border-color: #064119;
-    min-width: 100%;
-    padding: 0.5rem;
-}

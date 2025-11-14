@@ -83,12 +83,13 @@ div {
 }
 
 .button-custom {
-    display: inline-block;
+    /*display: inline-block;*/
     padding: 4px 32px;
     background-color: #064119;
     color: white;
     border-radius: 8px;
     text-decoration: none;
+    margin-right: 12px;
 }
 
 .formField {
@@ -101,4 +102,19 @@ div {
 .button-custom:hover{
     background-color: #064119;
     color: white;
+}
+
+.recipe-part {
+    padding: 16px 2.5rem 16px 2.5rem;
+    border-bottom: 2px solid;
+    border-color: #064119;
+    min-width: 100%;
+}
+
+.recipeForm {
+    margin-bottom: 12px;
+}
+
+.recipeFormInput {
+    margin-bottom: 4px;
 }

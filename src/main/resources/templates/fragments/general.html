@@ -13,23 +13,41 @@
 
 <body>
 
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand">ChefMind</a>
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/category/all}">Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/ingredient/all}">Ingredients</a>
-                </li>
-            </ul>
-        </div>
+<!--<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-custom">-->
+<!--    <a class="navbar-brand">ChefMind</a>-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/category/all}">Categories</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/ingredient/all}">Ingredients</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<nav th:fragment="navbar" class="navbar">
+    <a class="nav-brand" th:href="@{/recipe/all}">ChefMind</a>
+    <div>
+        <ul class="navbar-items">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/category/all}">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ingredient/all}">Ingredients</a>
+            </li>
+        </ul>
     </div>
+    <a class="button-custom" type="button" th:href="@{/recipe/all}">new recipe</a>
 </nav>
 
 <div th:fragment="footer">

@@ -9,24 +9,34 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<h1>Categories</h1>
+<div class="top-div">
+    <div class="categoryForm">
+        <h1>Categories</h1>
 
-<form th:action="@{/category/new}" method="post" th:object="${formCategory}">
-    <input type="hidden" th:field="*{categoryId}">
+        <form th:action="@{/category/new}" method="post" th:object="${formCategory}">
+            <input type="hidden" th:field="*{categoryId}">
 
-    <input type="text" th:field="*{categoryName}">
-    <input type="submit" value="add">
+            <input class="formField" type="text" th:field="*{categoryName}">
+            <input class="button-custom" type="submit" value="add">
+        </form>
+    </div>
+</div>
 
-</form>
+<div class="bot-div">
+    <table>
+        <tr th:each="category : ${allCategories}">
+            <td th:text="${category.categoryName}"></td>
+        </tr>
+    </table>
+</div>
 
-<table>
-    <tr th:each="category : ${allCategories}">
-        <td th:text="${category.categoryName}"></td>
-    </tr>
-</table>
 
-<div th:replace="~{fragments/general :: footer}"></div>
-<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+<div class="footer">
+    <div th:replace="~{fragments/general :: footer}"></div>
+    <div th:replace="~{fragments/general :: bottomScripts}"></div>
+</div>
+
 
 </body>
 </html>

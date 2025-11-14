@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Recipes</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe details</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+    <link rel="stylesheet" type="text/css" href="/css/recipeOverview.css" />
 </head>
 <body>
     <div th:replace="~{fragments/general :: navbar}"></div>
 
     <h1>Recipes</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Recipe</td>
-                <td></td>
-                <td></td>
-            </tr>
-        </thead>
+        <div class="recipe-grid">
+            <div th:each="recipe : ${recipes}">
+                <div class="recipe-card">
+                    <img th:src="${recipe.image}" alt="nothing">
+                    <div class="recipe-info">
+                        <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
+                        <p>🍽️ <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
+                            ⏱️ <span th:text="${recipe.time}">30</span> min</p>
+                    </div>
+                </div>
 
-        <tbody>
-            <tr th:each="recipe : ${recipes}">
-                <td>
-                    <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
-                </td>
-                <td><a th:href="@{/recipe/edit/{recipeName}(recipeName = ${recipe.name})}">edit</a></td>
-                <td><a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">delete</a></td>
-            </tr>
-        </tbody>
-    </table>
+<!--                <a th:href="@{/recipe/edit/{recipeName}(recipeName = ${recipe.name})}">edit</a>-->
+<!--                <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">delete</a>-->
+            </div>
+        </div>
 
     <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
         Recipe name: <input type="text" th:field="*{name}">

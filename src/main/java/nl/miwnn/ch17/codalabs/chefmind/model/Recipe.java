@@ -19,6 +19,7 @@ public class Recipe {
     private String name;
     private Integer servingSize;
     private Integer time;
+    private String image;
 
     @ElementCollection
     @Column(columnDefinition = "TEXT")
@@ -61,6 +62,14 @@ public class Recipe {
 
     public void setTime(Integer time) {
         this.time = time;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<String> getInstructions() {

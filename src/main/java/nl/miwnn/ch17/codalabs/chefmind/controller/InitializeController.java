@@ -85,14 +85,15 @@ public class InitializeController {
 
         Recipe cheeseSandwich = makeRecipe("Cheese sandwich", 1, 5,
                 "Cut slices of cheese with a cheese slicer. Place the cheese on a piece of bread. " +
-                        "Top off with another piece of bread. Voilà!", lunch);
+                        "Top off with another piece of bread. Voilà!",
+                "https://assets-jpcust.jwpsrv.com/thumbnails/MOT2ZB2B-1280.jpg", lunch);
         makeIngredientUse(cheeseSandwich, cheese, "2 slices");
         makeIngredientUse(cheeseSandwich, bread, "2 pieces");
 
         Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", 4, 45,
                 "Sauté onion, garlic, and minced beef until browned. " +
                         "Add tomato paste, crushed tomatoes, herbs, salt, and pepper. Simmer 30 minutes. " +
-                        "Serve over cooked spaghetti and top with Parmesan.", dinner, italian);
+                        "Serve over cooked spaghetti and top with Parmesan.", "image", dinner, italian);
         makeIngredientUse(spaghettiBolognese, onion, "1");
         makeIngredientUse(spaghettiBolognese, garlic, "2 cloves");
         makeIngredientUse(spaghettiBolognese, salt, "to taste");
@@ -103,7 +104,7 @@ public class InitializeController {
 
         Recipe vegetableSoup = makeRecipe("Vegetable soup", 6, 40,
                 "Sauté onion, carrot, and celery. Add diced tomatoes, broth, and seasonings. " +
-                        "Simmer until vegetables are tender. Adjust salt and pepper before serving.",
+                        "Simmer until vegetables are tender. Adjust salt and pepper before serving.", "image",
                 lunch, soups, vegetarian);
         makeIngredientUse(vegetableSoup, onion, "1");
         makeIngredientUse(vegetableSoup, carrot, "3");
@@ -113,6 +114,7 @@ public class InitializeController {
         Recipe pancakes = makeRecipe("Pancakes", 4, 20,
                 "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter. " +
                         "Cook on a greased pan until bubbles form. Flip and cook until golden. Serve with syrup.",
+                "image",
                 breakfast);
         makeIngredientUse(pancakes, flour, "150g");
         makeIngredientUse(pancakes, bakingPowder, "10g");
@@ -121,7 +123,7 @@ public class InitializeController {
 
         Recipe chocolateChipCookies = makeRecipe("Chocolate chip cookies", 24, 25,
                 "Mix butter, sugar, and egg. Add flour, baking powder, and chocolate chips. " +
-                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", cookies, favourites);
+                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "image", cookies, favourites);
         makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams");
     }
 
@@ -145,7 +147,7 @@ public class InitializeController {
     }
 
     private Recipe makeRecipe(String name, Integer servingSize, Integer time,
-                              String instructions, Category ... categories) {
+                              String instructions, String image, Category ... categories) {
         List<String> instructionList = new ArrayList<>();
         instructionList.add(instructions);
         Recipe recipe = new Recipe();
@@ -154,6 +156,7 @@ public class InitializeController {
         recipe.setServingSize(servingSize);
         recipe.setTime(time);
         recipe.setInstructions(instructionList);
+        recipe.setImage(image);
 
         Set<Category> categorySet= new HashSet<>(Arrays.asList(categories));
         recipe.setCategories(categorySet);

@@ -187,4 +187,10 @@ public class InitializeController {
 
         return ingredientUse;
     }
+
+    public List<String> turnStringIntoListOfStrings(String string) {
+        String[] parts = string.split(";");
+
+        return new ArrayList<>(Arrays.asList(parts));
+    }
 }

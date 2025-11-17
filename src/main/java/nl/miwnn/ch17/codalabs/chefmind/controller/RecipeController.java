@@ -126,8 +126,6 @@ public class RecipeController {
             use.setAmount(amount);
             use.setRecipe(recipeToBeSaved);
 
-            ingredientUseRepository.save(use);
-
             ingredientUses.add(use);
         }
 

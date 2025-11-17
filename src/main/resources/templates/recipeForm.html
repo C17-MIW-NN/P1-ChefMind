@@ -44,14 +44,14 @@
         </div>
 
         <div class="recipeForm" id="ingredients">
-            <div th:each="use : *{ingredientUses}" class="ingredient">
+            <div th:each="use : *{ingredientUses}">
                 <input type="text" name="ingredientNames[]" th:value="${use.ingredient.ingredientName}"
                        placeholder="Ingredient">
                 <input type="text" name="amounts[]" th:value="${use.amount}" placeholder="Amount">
                 <button type="button" class="remove">Remove</button>
             </div>
 
-            <div th:if="${#lists.isEmpty(formRecipe.ingredientUses)}" class="ingredient">
+            <div th:if="${#lists.isEmpty(formRecipe.ingredientUses)}">
                 <input type="text" +
                        name="ingredientNames[]" placeholder="Ingredient">
                 <input type="text" name="amounts[]" placeholder="Amount">
@@ -70,25 +70,27 @@
             </h4>
         </div>
 
-        <div class="recipeForm" id="existingInstructions">
+        <div class="recipeForm" id="instructions" th:attr="data-count=
+        ${formRecipe.instructions != null ? formRecipe.instructions.size() : 0}">
             <div th:each="existingInstruction, iteration : *{instructions}">
-                <a>
-                    <input type="text"
-                           th:field="*{instructions[__${iteration.index}__]}"
-                           th:placeholder="'Next step'">
-                    <button type="button" class="removeButton">remove</button>
-                </a>
+                <input type="text"
+                       th:field="*{instructions[__${iteration.index}__]}"
+                       th:placeholder="'Add a step'">
+                <button type="button" class="remove">Remove</button>
+            </div>
+
+            <div th:if="${#lists.isEmpty(formRecipe.instructions)}">
+                <input type="text"
+                       th:field="*{instructions[__${0}__]}"
+                       th:placeholder="'Add a step'">
+                <button type="button" class="remove">Remove</button>
+
             </div>
         </div>
 
-        <div class="recipeForm" id="addedInstructions" th:attr="data-count=${#lists.size(formRecipe.instructions)}"></div>
-
-        <div class="recipeForm" >
-            <button type="button" onclick="addInput()">Add a step</button>
+        <div>
+            <button type="button" id="addInstruction">Add another step</button>
         </div>
-
-
-
 
         <div><input class="btn button-custom" type="submit" value="Save recipe"></div>
     </form>

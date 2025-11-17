@@ -1,54 +1,42 @@
-const addedInstructions = document.getElementById("addedInstructions");
-const existingInstructions = document.getElementById("existingInstructions")
+const ingredientsContainer = document.getElementById("ingredients");
+const addIngredientButton = document.getElementById("addIngredient");
 
-addedInstructions.addEventListener("click", removeClick)
-existingInstructions.addEventListener("click", removeClick)
+addIngredientButton.addEventListener("click", function () {
+    const ingredientLine = document.createElement("div");
+    ingredientLine.innerHTML = `
+      <input type="text" name="ingredientNames[]" placeholder="Ingredient">
+      <input type="text" name="amounts[]" placeholder="Amount">
+      <button type="button" class="remove">Remove</button>
+    `;
+    ingredientsContainer.appendChild(ingredientLine);
+});
 
-function removeClick(e) {
-    if (e.target.classList.contains("removeButton")) {
-    e.target.parentElement.remove();
-    }
-}
+const instructionsContainer = document.getElementById("instructions");
+const addInstructionButton = document.getElementById("addInstruction");
+let count = parseInt(instructionsContainer.dataset.count);
 
-let count = parseInt(addedInstructions.dataset.count);
-
-function addInput() {
-    const container = document.createElement("div")
+addInstructionButton.addEventListener("click", function () {
+    const instructionLine = document.createElement("div");
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Next step";
-    input.name = `instructions[${count}]`
+    input.placeholder = "Add a step";
+    input.name = `instructions[${count}]`;
 
-    const removeButton = document.createElement("button")
-    removeButton.type = "button"
-    removeButton.textContent = "remove"
-    removeButton.className = "removeButton"
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "Remove";
+    removeButton.className = "remove";
 
-    addedInstructions.append(container)
-    container.append(input, removeButton, document.createElement("br"));
-
-    count++;
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const ingredientsContainer = document.getElementById("ingredients");
-    const addButton = document.getElementById("addIngredient");
-
-    addButton.addEventListener("click", function () {
-        const div = document.createElement("div");
-        div.classList.add("ingredient");
-        div.innerHTML = `
-          <input type="text" name="ingredientNames[]" placeholder="Ingredient">
-          <input type="text" name="amounts[]" placeholder="Amount">
-          <button type="button" class="remove">Remove</button>
-        `;
-        ingredientsContainer.appendChild(div);
-    });
-
-    ingredientsContainer.addEventListener("click", function (e) {
-        if (e.target.classList.contains("remove")) {
-            e.target.closest(".ingredient").remove();
-        }
-    });
+    instructionLine.append(input, removeButton);
+    instructionsContainer.appendChild(instructionLine);
 });
+
+ingredientsContainer.addEventListener("click", removeClick);
+instructionsContainer.addEventListener("click", removeClick);
+
+function removeClick(e) {
+    if (e.target.classList.contains("remove")) {
+    e.target.parentElement.remove();
+    }
+}

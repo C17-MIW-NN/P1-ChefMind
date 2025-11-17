@@ -30,6 +30,8 @@ addInstructionButton.addEventListener("click", function () {
 
     instructionLine.append(input, removeButton);
     instructionsContainer.appendChild(instructionLine);
+
+    count++;
 });
 
 ingredientsContainer.addEventListener("click", removeClick);

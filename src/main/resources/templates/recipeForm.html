@@ -27,6 +27,10 @@
         </div>
 
         <div class="recipeForm">
+            Photo URL: <input type="text" th:field="*{image}">
+        </div>
+
+        <div class="recipeForm">
             Categories:
             <select th:field="${formRecipe.categories}" multiple>
                 <option th:each="category : ${allCategories}"

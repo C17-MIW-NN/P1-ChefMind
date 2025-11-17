@@ -168,8 +168,8 @@ public class InitializeController {
         recipe.setInstructions(instructionList);
         recipe.setImage(image);
 
-        Set<Category> categorySet= new HashSet<>(Arrays.asList(categories));
-        recipe.setCategories(categorySet);
+        List<Category> categoryList= new ArrayList<>(Arrays.asList(categories));
+        recipe.setCategories(categoryList);
 
         recipeRepository.save(recipe);
 

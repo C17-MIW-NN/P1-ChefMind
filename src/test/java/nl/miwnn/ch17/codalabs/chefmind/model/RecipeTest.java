@@ -3,7 +3,9 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,14 +21,14 @@ public class RecipeTest {
     void testGetterCategoriesOfRecipe() {
 
         // Arrange
-        Set<Category> expectedCategories = new HashSet<Category>();
+        List<Category> expectedCategories = new ArrayList<>();
 
         Recipe recipe = new Recipe();
 
-        recipe.setCategories(new HashSet<>());
+        recipe.setCategories(new ArrayList<>());
 
         // Act
-        Set<Category> categories = recipe.getCategories();
+        List<Category> categories = recipe.getCategories();
 
         // Assert
         assertEquals(expectedCategories, categories);

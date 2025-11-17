@@ -1,12 +1,16 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
 import nl.miwnn.ch17.codalabs.chefmind.model.Category;
+import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,9 +22,11 @@ import java.util.Optional;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryRepository categoryRepository;
+    private final RecipeRepository recipeRepository;
 
-    public CategoryController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository, RecipeRepository recipeRepository) {
         this.categoryRepository = categoryRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     @GetMapping("/all")
@@ -34,6 +40,27 @@ public class CategoryController {
     @GetMapping("/add")
     public String showCategoryForm(Model datamodel) {
         return showCategoryForm(datamodel, new Category());
+    }
+
+
+    @GetMapping("/detail/{name}")
+    public String showCategoryDetailpage(@PathVariable("name") String name,
+                                         Model datamodel,
+                                         Long categoryId) {
+        Optional<Category> categoryToShow = categoryRepository.findByCategoryName(name);
+
+        if (categoryToShow.isEmpty()) {
+            return "redirect:/category/all";
+        }
+
+        Category category = categoryToShow.get();
+
+        List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.getCategoryId());
+
+        datamodel.addAttribute("category", category);
+        datamodel.addAttribute("recipes", recipesPerCategory);
+
+        return "categoryDetails";
     }
 
     @PostMapping("/new")

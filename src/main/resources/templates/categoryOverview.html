@@ -23,11 +23,10 @@
 </div>
 
 <div class="bot-div">
-    <table>
-        <tr th:each="category : ${allCategories}">
-            <td th:text="${category.categoryName}"></td>
-        </tr>
-    </table>
+    <ol th:each="category : ${allCategories}">
+        <li><a th:href="@{/category/detail/{name}(name = ${category.categoryName})}"
+               th:text="${category.categoryName}"></a></li>
+    </ol>
 </div>
 
 

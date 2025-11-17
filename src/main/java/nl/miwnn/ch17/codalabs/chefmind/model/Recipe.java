@@ -31,8 +31,7 @@ public class Recipe {
     private List<IngredientUse> ingredientUses;
 
     @ManyToMany
-    @OrderBy("categoryName ASC")
-    private Set<Category> categories;
+    private List<Category> categories;
 
     public Integer calculateTotalTime() {
         return this.prepTime + this.cookingTime;
@@ -110,11 +109,11 @@ public class Recipe {
         this.ingredientUses = ingredientUses;
     }
 
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 }

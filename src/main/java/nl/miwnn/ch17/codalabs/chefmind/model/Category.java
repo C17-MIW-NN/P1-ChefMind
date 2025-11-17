@@ -2,6 +2,9 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Harm van der Weide
  * A label that catagorises the recipe.
@@ -14,6 +17,9 @@ public class Category {
 
     @Column(unique = true)
     private String categoryName;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Recipe> recipes;
 
     public Long getCategoryId() {
         return categoryId;
@@ -29,6 +35,14 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
 //    @Override

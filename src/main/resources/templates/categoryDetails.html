@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category details</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+    <link rel="stylesheet" type="text/css" href="/css/recipeOverview.css" />
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<h1><span th:text="${category.categoryName}"></span></h1>
+
+<div class="recipe-grid">
+    <div th:each="recipe : ${category.recipes}">
+        <div class="recipe-card">
+            <img th:src="${recipe.image}" alt="nothing">
+            <div class="recipe-info">
+                <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
+                <p>🍽️ <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
+                    ⏱️ <span th:text="${recipe.time}">30</span> min</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

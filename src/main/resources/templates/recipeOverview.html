@@ -25,16 +25,14 @@
                             ⏱️ <span th:text="${recipe.time}">30</span> min</p>
                     </div>
                 </div>
-
-<!--                <a th:href="@{/recipe/edit/{recipeName}(recipeName = ${recipe.name})}">edit</a>-->
-<!--                <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">delete</a>-->
             </div>
         </div>
 
-    <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
-        Recipe name: <input type="text" th:field="*{name}">
-        <input class="btn button-custom" type="submit" value="Add new recipe">
-    </form>
+<!--    <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">-->
+<!--        Recipe name: <input type="text" th:field="*{name}">-->
+<!--        <input class="btn button-custom" type="submit" value="Add new recipe">-->
+<!--    </form>-->
+    <a class="btn button-custom" th:href="@{/recipe/new}"><i class="bi bi-plus"></i>Add new recipe</a>
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>

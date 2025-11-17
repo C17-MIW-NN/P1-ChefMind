@@ -45,25 +45,30 @@ public class RecipeController {
         return "recipeOverview";
     }
 
-    @PostMapping("/new")
-    public String saveNewRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
-                                BindingResult result,
-                                Model datamodel) {
-        Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
+//    @PostMapping("/new")
+//    public String saveNewRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
+//                                BindingResult result,
+//                                Model datamodel) {
+//        Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
+//
+//        if (recipeWithSameName.isPresent() &&
+//                !recipeWithSameName.get().getRecipeId().equals(recipeToBeSaved.getRecipeId())) {
+//            result.addError(new FieldError("recipe",
+//                    "name",
+//                    "Recipe name already exists"));
+//        }
+//
+//        if (result.hasErrors()) {
+//            return showRecipeForm(datamodel, recipeToBeSaved);
+//        }
+//
+//        recipeRepository.save(recipeToBeSaved);
+//        return "redirect:/recipe/edit/" + recipeToBeSaved.getName();
+//    }
 
-        if (recipeWithSameName.isPresent() &&
-                !recipeWithSameName.get().getRecipeId().equals(recipeToBeSaved.getRecipeId())) {
-            result.addError(new FieldError("recipe",
-                    "name",
-                    "Recipe name already exists"));
-        }
-
-        if (result.hasErrors()) {
-            return showRecipeForm(datamodel, recipeToBeSaved);
-        }
-
-        recipeRepository.save(recipeToBeSaved);
-        return "redirect:/recipe/edit/" + recipeToBeSaved.getName();
+    @GetMapping("/new")
+    public String showNewRecipeForm(Model datamodel) {
+        return showRecipeForm(datamodel, new Recipe());
     }
 
     @GetMapping("/edit/{name}")

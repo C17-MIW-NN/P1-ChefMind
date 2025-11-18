@@ -23,7 +23,7 @@
             <div class="recipe-info">
                 <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
                 <p>🍽️ <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
-                    ⏱️ <span th:text="${recipe.time}">30</span> min</p>
+                    ⏱️ <span th:text="${recipe.calculateTotalTime()}">30</span> min</p>
             </div>
         </div>
     </div>

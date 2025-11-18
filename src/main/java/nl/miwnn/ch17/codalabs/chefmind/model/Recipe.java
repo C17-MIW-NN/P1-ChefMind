@@ -20,7 +20,6 @@ public class Recipe {
     private Integer servingSize;
     private Integer prepTime;
     private Integer cookingTime;
-    private Integer time;
     private String image = "https://arthurmillerfoundation.org/wp-content/uploads/2018/06/default-placeholder.png";
 
     @ElementCollection
@@ -75,14 +74,6 @@ public class Recipe {
 
     public void setCookingTime(Integer cookingTime) {
         this.cookingTime = cookingTime;
-    }
-
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
-        this.time = time;
     }
 
     public String getImage() {

@@ -15,15 +15,19 @@
         <input type="hidden" th:field="*{recipeId}">
 
         <div class="recipeForm">
-            <a>
-                Recipe name: <input type="text" th:field="*{name}" required>
-            </a>
-            <a>
-                Serving size: <input type="text" th:field="*{servingSize}">
-            </a>
-            <a>
-                Cooking time: <input type="text" th:field="*{time}"> minutes
-            </a>
+            Recipe name: <input type="text" th:field="*{name}" required>
+        </div>
+
+        <div class="recipeForm">
+            Serving size: <input type="text" th:field="*{servingSize}">
+        </div>
+
+        <div class="recipeForm">
+            Prep time: <input type="text" th:field="*{prepTime}"> minutes
+        </div>
+
+        <div class="recipeForm">
+            Cooking time: <input type="text" th:field="*{cookingTime}"> minutes
         </div>
 
         <div class="recipeForm">
@@ -39,9 +43,8 @@
                 </option>
             </select>
         </div>
-        <br>
 
-        <div>
+        <div class="recipeForm">
             <h4>
             Ingredients:
             </h4>
@@ -63,10 +66,9 @@
             </div>
         </div>
 
-        <div>
+        <div class="recipeForm">
             <button type="button" id="addIngredient">Add another ingredient</button>
         </div>
-        <br><br>
 
         <div>
             <h4>
@@ -92,7 +94,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="recipeForm">
             <button type="button" id="addInstruction">Add another step</button>
         </div>
 

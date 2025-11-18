@@ -27,7 +27,9 @@
 
     <div class="recipe-part">
         <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
-        <p><b>Cooking time:</b> <span th:text="${recipe.time}"></span></p>
+        <p><b>Prep time:</b> <span th:text="${recipe.prepTime}"></span> minutes</p>
+        <p><b>Cooking time:</b> <span th:text="${recipe.cookingTime}"></span> minutes</p>
+        <p><b>Total time:</b> <span th:text="${recipe.calculateTotalTime()}"></span> minutes</p>
         <p><b>Categories:</b>
             <span th:each="category : ${recipe.categories}">
                 <span th:text="${category.categoryName}"></span>

@@ -35,17 +35,12 @@ public class CategoryController {
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", new Category());
 
-        if (name == null) {
+        Optional<Category> category = categoryRepository.findByCategoryName(name);
+
+        if (category.isEmpty()) {
             datamodel.addAttribute("recipes", recipeRepository.findAll());
-            datamodel.addAttribute("activeCategory", null);
         } else {
-            Category category = categoryRepository.findByCategoryName(name).orElse(null);
-
-            if (category == null) {
-                return "redirect:/category/all";
-            }
-
-            List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.getCategoryId());
+            List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.get().getCategoryId());
 
             datamodel.addAttribute("recipes", recipesPerCategory);
             datamodel.addAttribute("activeCategory", name);
@@ -60,26 +55,16 @@ public class CategoryController {
     }
 
     @PostMapping("/new")
-    public String saveNewCategory (@ModelAttribute("formCategory") Category categoryToBeSaved,
-                                   BindingResult result,
+    public String saveNewCategory (@ModelAttribute("formCategory") Category categoryToBeSaved, BindingResult result,
                                    Model datamodel) {
         Optional<Category> categoryWithSameName =
                 categoryRepository.findByCategoryName(categoryToBeSaved.getCategoryName());
 
-        if (categoryWithSameName.isPresent() &&
-                !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
-            result.addError(new FieldError("formCategory",
-                    "categoryName",
-                    "Category name already exists"));
-            return "redirect:/category/all";
-        }
+        String returnStringSameName = checkForSameName(categoryToBeSaved, result, categoryWithSameName);
+        if (returnStringSameName != null) return returnStringSameName;
 
-        if (categoryToBeSaved.getCategoryName() == null){
-            result.addError(new FieldError("formCategory",
-                    "categoryName",
-                    "Please do not leave field blank"));
-            return "redirect:/category/all";
-        }
+        String returnStringCategoryEmpty = checkIfCategoryIsEmpty(categoryToBeSaved, result);
+        if (returnStringCategoryEmpty != null) return returnStringCategoryEmpty;
 
         if (result.hasErrors()) {
             return showCategoryForm(datamodel, categoryToBeSaved);
@@ -89,10 +74,28 @@ public class CategoryController {
         return "redirect:/category/all";
     }
 
+    private static String checkIfCategoryIsEmpty(Category categoryToBeSaved, BindingResult result) {
+        if (categoryToBeSaved.getCategoryName() == null){
+            result.addError(new FieldError("formCategory", "categoryName",
+                    "Please do not leave field blank"));
+            return "redirect:/category/all";
+        }
+        return null;
+    }
+
+    private static String checkForSameName(Category categoryToBeSaved, BindingResult result, Optional<Category> categoryWithSameName) {
+        if (categoryWithSameName.isPresent() &&
+                !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
+            result.addError(new FieldError("formCategory", "categoryName",
+                    "Category name already exists"));
+            return "redirect:/category/all";
+        }
+        return null;
+    }
+
     public String showCategoryForm(Model datamodel, Category category) {
         datamodel.addAttribute("formCategory", category);
 
         return "categoryForm";
     }
-
 }

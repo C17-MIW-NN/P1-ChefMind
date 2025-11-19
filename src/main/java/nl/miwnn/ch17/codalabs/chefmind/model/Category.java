@@ -3,7 +3,6 @@ package nl.miwnn.ch17.codalabs.chefmind.model;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Harm van der Weide

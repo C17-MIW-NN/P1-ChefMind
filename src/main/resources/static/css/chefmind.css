@@ -1,11 +1,14 @@
+* {
+    box-sizing: border-box;
+}
 body {
     display: flex;
     min-height: 100vh;
-    min-width: 100vh;
+    min-width: 100vw;
     align-content: start;
     flex-direction: column;
     background-color: #F6F1EC;
-    color: #064119;
+    color: #1D6813;
     margin: 0px;
     box-sizing: border-box;
 }
@@ -31,9 +34,68 @@ body {
 }
 
 .categoryForm {
-    position: relative;
-    top: 17px;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
 
+.categoryLabel {
+    display: inline-block;
+    padding: 2px 8px 2px 8px;
+    border-radius: 2px;
+    background-color: #1D6813;
+    color: #F6F1EC;
+}
+
+.contentContainer {
+    display: flex;
+    padding: 12px;
+    flex-direction: row;
+    min-height: 100%;
+}
+
+.innerContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    max-width: 300px;
+    border-radius: 12px;
+    background-color: #ede8e3;
+}
+
+.leftContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    min-width: 30vw;
+
+}
+
+.rightContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    min-width: 70vw;
+}
+
+.categoryButton {
+    display: flex;
+    flex-direction: column;
+    padding: 2px 8px 2px 8px;
+    color: #1D6813;
+    text-decoration: none;
+}
+
+.categoryButton:hover{
+    display: inline-block;
+    padding: 2px 8px 2px 8px;
+    border-radius: 2px;
+    background-color: #1D6813;
+    color: #F6F1EC;
+}
+
+.active {
+    text-decoration: underline;
 }
 
 .navbar {
@@ -42,8 +104,8 @@ body {
     justify-content: start;
     min-height: 5vh;
     min-width: 100%;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 12px;
+    padding-right: 12px;
     flex-direction: row;
     margin: 0px;
     /*background-color: #e1d4be;*/
@@ -66,7 +128,7 @@ body {
     font-weight: bolder;
     align-content: center;
     text-decoration: none;
-    color: #064119;
+    color: #1D6813;
 }
 
 .nav-link {
@@ -74,36 +136,41 @@ body {
     padding-left: 1rem;
     padding-right: 1rem;
     text-decoration: none;
-    color: #064119;
+    color: #1D6813;
 }
 
 .button-custom {
-    /*display: inline-block;*/
-    padding: 4px 32px;
-    background-color: #064119;
-    color: white;
-    border-radius: 8px;
+    display: flex;
+    padding: 2px 12px;
+    background-color: #1D6813;
+    color: #F6F1EC;
+    border-radius: 4px;
+    border: none;
     text-decoration: none;
     margin-right: 12px;
     margin-top: 8px;
+    box-shadow: none;
 }
 
 .formField {
-    width: 320px;
-    height: 34px;
-    border-radius: 8px;
-    border: 20px #064119;
+    display: flex;
+    flex-grow: 1;
+    height: 24px;
+    border-radius: 2px;
+    color: #1D6813;
+    background-color: #dddddd;
+    border: 20px #1D6813;
 }
 
 .button-custom:hover{
-    background-color: #064119;
-    color: white;
+    /*background-color: #064119;*/
+    color: #F6F1EC;
 }
 
 .recipe-part {
     padding: 16px 2.5rem 16px 2.5rem;
     border-bottom: 2px solid;
-    border-color: #064119;
+    border-color: #1D6813;
     min-width: 100%;
 }
 

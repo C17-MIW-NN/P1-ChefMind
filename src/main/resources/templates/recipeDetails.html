@@ -32,7 +32,8 @@
         <p><b>Total time:</b> <span th:text="${recipe.calculateTotalTime()}"></span> minutes</p>
         <p><b>Categories:</b>
             <span th:each="category : ${recipe.categories}">
-                <span th:text="${category.categoryName}"></span>
+                <a class="categoryButton" th:href="@{/category/detail/{name}(name = ${category.categoryName})}"
+                        th:text="${category.categoryName}"></a>
             </span></p>
     </div>
 

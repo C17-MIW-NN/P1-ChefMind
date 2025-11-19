@@ -30,9 +30,27 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public String showCategoryOverview (Model datamodel, Category category){
+    public String showCategoryOverview (@RequestParam(value = "name", required = false)
+                                            String name,
+                                            Model datamodel){
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", new Category());
+
+        if (name == null) {
+            datamodel.addAttribute("recipes", recipeRepository.findAll());
+            datamodel.addAttribute("activeCategory", null);
+        } else {
+            Category category = categoryRepository.findByCategoryName(name).orElse(null);
+
+            if (category == null) {
+                return "redirect:/category/all";
+            }
+
+            List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.getCategoryId());
+
+            datamodel.addAttribute("recipes", recipesPerCategory);
+            datamodel.addAttribute("activeCategory", name);
+        }
 
         return "categoryOverview";
     }
@@ -40,27 +58,6 @@ public class CategoryController {
     @GetMapping("/add")
     public String showCategoryForm(Model datamodel) {
         return showCategoryForm(datamodel, new Category());
-    }
-
-
-    @GetMapping("/detail/{name}")
-    public String showCategoryDetailpage(@PathVariable("name") String name,
-                                         Model datamodel,
-                                         Long categoryId) {
-        Optional<Category> categoryToShow = categoryRepository.findByCategoryName(name);
-
-        if (categoryToShow.isEmpty()) {
-            return "redirect:/category/all";
-        }
-
-        Category category = categoryToShow.get();
-
-        List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.getCategoryId());
-
-        datamodel.addAttribute("category", category);
-        datamodel.addAttribute("recipes", recipesPerCategory);
-
-        return "categoryDetails";
     }
 
     @PostMapping("/new")
@@ -75,28 +72,14 @@ public class CategoryController {
             result.addError(new FieldError("formCategory",
                     "categoryName",
                     "Category name already exists"));
+            return "redirect:/category/all";
         }
 
-        if (result.hasErrors()) {
-            return showCategoryForm(datamodel, categoryToBeSaved);
-        }
-
-        categoryRepository.save(categoryToBeSaved);
-        return "redirect:/category/all";
-    }
-
-    @PostMapping("/save")
-    public String saveOrUpdateCategory (@ModelAttribute("formCategory") Category categoryToBeSaved,
-                                     BindingResult result,
-                                     Model datamodel) {
-        Optional<Category> categoryWithSameName =
-                categoryRepository.findByCategoryName(categoryToBeSaved.getCategoryName());
-
-        if (categoryWithSameName.isPresent() &&
-                !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
+        if (categoryToBeSaved.getCategoryName() == null){
             result.addError(new FieldError("formCategory",
                     "categoryName",
-                    "Category name already exists"));
+                    "Please do not leave field blank"));
+            return "redirect:/category/all";
         }
 
         if (result.hasErrors()) {

@@ -9,25 +9,51 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="top-div">
-    <div class="categoryForm">
-        <h1>Categories</h1>
+<div class="contentContainer">
 
-        <form th:action="@{/category/new}" method="post" th:object="${formCategory}">
-            <input type="hidden" th:field="*{categoryId}">
+    <div class="leftContainer">
 
-            <input class="formField" type="text" th:field="*{categoryName}">
-            <input class="button-custom" type="submit" value="add">
-        </form>
+        <div class="innerContainer">
+            <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}">
+                <input type="hidden" th:field="*{categoryId}">
+
+                <input placeholder="New Category" class="formField" type="text" th:field="*{categoryName}" required>
+                <input class="button-custom" type="submit" value="add">
+            </form>
+
+            <hr>
+            <p class="categoryLabel">Categories</p>
+                <a class="categoryButton"
+                   th:href="@{/category/all}"
+                   th:classappend="${activeCategory} == null ? ' active' : ''">All</a>
+                <a class="categoryButton"
+                   th:each="category : ${allCategories}"
+                   th:href="@{/category/all(name=${category.categoryName})}"
+                   th:text="${category.categoryName}"
+                   th:classappend="${activeCategory} == ${category.categoryName} ? ' active' : ''"></a>
+        </div>
     </div>
+
+    <div class="rightContainer">
+        <div class="categoryForm">
+            <h1>Recipes</h1>
+        </div>
+        <div class="recipe-grid">
+            <div th:each="recipe : ${recipes}">
+                <div class="recipe-card">
+                    <img th:src="${recipe.image}" alt="nothing">
+                    <div class="recipe-info">
+                        <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
+                        <p>🍽️ <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
+                            ⏱️ <span th:text="${recipe.time}">30</span> min</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="bot-div">
-    <ol th:each="category : ${allCategories}">
-        <li><a th:href="@{/category/detail/{name}(name = ${category.categoryName})}"
-               th:text="${category.categoryName}"></a></li>
-    </ol>
-</div>
 
 
 

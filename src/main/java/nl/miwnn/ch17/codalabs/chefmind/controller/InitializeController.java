@@ -86,7 +86,8 @@ public class InitializeController {
         Recipe cheeseSandwich = makeRecipe("Cheese sandwich", 1, 5, 0,
                 "Cut slices of cheese with a cheese slicer.;Place the cheese on a piece of bread.;" +
                         "Top off with another piece of bread. Voilà!",
-                "https://assets-jpcust.jwpsrv.com/thumbnails/MOT2ZB2B-1280.jpg", lunch);
+                "https://californiaavocado.com/wp-content/uploads/2023/04/" +
+                        "AvoBaconGrilledCheese_0011-scaled-e1682914545487.jpg", lunch);
         makeIngredientUse(cheeseSandwich, cheese, "2 slices");
         makeIngredientUse(cheeseSandwich, bread, "2 pieces");
 

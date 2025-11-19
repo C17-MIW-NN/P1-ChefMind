@@ -22,6 +22,7 @@
             </form>
 
             <hr>
+
             <p class="categoryLabel">Categories</p>
                 <a class="categoryButton"
                    th:href="@{/category/all}"
@@ -38,18 +39,8 @@
         <div class="categoryForm">
             <h1>Recipes</h1>
         </div>
-        <div class="recipe-grid">
-            <div th:each="recipe : ${recipes}">
-                <div class="recipe-card">
-                    <img th:src="${recipe.image}" alt="nothing">
-                    <div class="recipe-info">
-                        <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.name}"></a>
-                        <p>🍽️ <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
-                            ⏱️ <span th:text="${recipe.time}">30</span> min</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <div th:replace="~{fragments/general :: recipeCards}"></div>
     </div>
 
 </div>

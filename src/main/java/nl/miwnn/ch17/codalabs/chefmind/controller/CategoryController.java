@@ -30,8 +30,7 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public String showCategoryOverview (@RequestParam(value = "name", required = false)
-                                            String name,
+    public String showCategoryOverview (@RequestParam(value = "name", required = false) String name,
                                             Model datamodel){
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", new Category());

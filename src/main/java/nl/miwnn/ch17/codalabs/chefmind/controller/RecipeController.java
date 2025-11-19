@@ -19,7 +19,7 @@ import java.util.Optional;
 
 /**
  * @author Assib Pajman
- *
+ * Handles requests regarding recipes
  */
 @Controller
 @RequestMapping("/recipe")
@@ -45,27 +45,6 @@ public class RecipeController {
         return "recipeOverview";
     }
 
-//    @PostMapping("/new")
-//    public String saveNewRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
-//                                BindingResult result,
-//                                Model datamodel) {
-//        Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
-//
-//        if (recipeWithSameName.isPresent() &&
-//                !recipeWithSameName.get().getRecipeId().equals(recipeToBeSaved.getRecipeId())) {
-//            result.addError(new FieldError("recipe",
-//                    "name",
-//                    "Recipe name already exists"));
-//        }
-//
-//        if (result.hasErrors()) {
-//            return showRecipeForm(datamodel, recipeToBeSaved);
-//        }
-//
-//        recipeRepository.save(recipeToBeSaved);
-//        return "redirect:/recipe/edit/" + recipeToBeSaved.getName();
-//    }
-
     @GetMapping("/new")
     public String showNewRecipeForm(Model datamodel) {
         return showRecipeForm(datamodel, new Recipe());
@@ -84,10 +63,60 @@ public class RecipeController {
 
     @PostMapping("/save")
     public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
-                                     @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
+                                     @RequestParam(value = "ingredientNames[]", required = false)
+                                     List<String> ingredientNames,
                                      @RequestParam(value = "amounts[]", required = false) List<String> amounts,
                                      BindingResult result,
                                      Model datamodel) {
+        checkForSameName(recipeToBeSaved, result);
+
+        if (result.hasErrors()) {
+            return showRecipeForm(datamodel, recipeToBeSaved);
+        }
+
+        if (ingredientNames == null) {
+            ingredientNames = new ArrayList<>();
+        }
+
+        List<IngredientUse> ingredientUses = new ArrayList<>();
+        makeIngredientUses(recipeToBeSaved, ingredientNames, amounts, ingredientUses);
+
+        recipeToBeSaved.setIngredientUses(ingredientUses);
+
+        recipeRepository.save(recipeToBeSaved);
+        return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
+    }
+
+    private void makeIngredientUses(Recipe recipeToBeSaved, List<String> ingredientNames, List<String> amounts,
+                                    List<IngredientUse> ingredientUses) {
+        for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
+            String ingredientName = ingredientNames.get(ingredientIndex);
+            String amount = amounts.size() > ingredientIndex ? amounts.get(ingredientIndex) : "";
+
+            IngredientUse use = new IngredientUse();
+
+            useExistingIngredientOrMakeNewIngredient(ingredientName, use);
+
+            use.setAmount(amount);
+            use.setRecipe(recipeToBeSaved);
+
+            ingredientUses.add(use);
+        }
+    }
+
+    private void useExistingIngredientOrMakeNewIngredient(String ingredientName, IngredientUse use) {
+        Optional<Ingredient> optionalIngredient = ingredientRepository.findByIngredientName(ingredientName);
+        if (optionalIngredient.isPresent()) {
+            use.setIngredient(optionalIngredient.get());
+        } else {
+            Ingredient ingredient = new Ingredient();
+            ingredient.setIngredientName(ingredientName);
+            ingredientRepository.save(ingredient);
+            use.setIngredient(ingredient);
+        }
+    }
+
+    private void checkForSameName(Recipe recipeToBeSaved, BindingResult result) {
         Optional<Recipe> recipeWithSameName = recipeRepository.findByName(recipeToBeSaved.getName());
 
         if (recipeWithSameName.isPresent() &&
@@ -96,43 +125,6 @@ public class RecipeController {
                     "name",
                     "Recipe name already exists"));
         }
-
-        if (result.hasErrors()) {
-            return showRecipeForm(datamodel, recipeToBeSaved);
-        }
-
-        List<IngredientUse> ingredientUses = new ArrayList<>();
-
-        if (ingredientNames == null) {
-            ingredientNames = new ArrayList<>();
-        }
-
-        for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
-            String ingredientName = ingredientNames.get(ingredientIndex);
-            String amount = amounts.size() > ingredientIndex ? amounts.get(ingredientIndex) : "";
-
-            IngredientUse use = new IngredientUse();
-
-            Optional<Ingredient> optionalIngredient = ingredientRepository.findByIngredientName(ingredientName);
-            if (optionalIngredient.isPresent()) {
-                use.setIngredient(optionalIngredient.get());
-            } else {
-                Ingredient ingredient = new Ingredient();
-                ingredient.setIngredientName(ingredientName);
-                ingredientRepository.save(ingredient);
-                use.setIngredient(ingredient);
-            }
-
-            use.setAmount(amount);
-            use.setRecipe(recipeToBeSaved);
-
-            ingredientUses.add(use);
-        }
-
-        recipeToBeSaved.setIngredientUses(ingredientUses);
-
-        recipeRepository.save(recipeToBeSaved);
-        return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
     }
 
     @GetMapping("/delete/{recipeId}")
@@ -161,5 +153,4 @@ public class RecipeController {
 
         return "recipeForm";
     }
-
 }

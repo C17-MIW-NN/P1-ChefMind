@@ -12,17 +12,23 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class IngredientUse {
 
+    public static final int QUANTITY_GRAMS_FOR_CALCULATING_KCAL = 100;
     @Id
     @GeneratedValue
     private Long ingredientUseId;
 
     private String amount;
+    private Integer quantityInGrams;
 
     @ManyToOne
     private Ingredient ingredient;
 
     @ManyToOne
     private Recipe recipe;
+
+    public Integer calculateKcalIngredientUse() {
+        return quantityInGrams * (ingredient.getKcalPer100g() / QUANTITY_GRAMS_FOR_CALCULATING_KCAL);
+    }
 
     public Long getIngredientUseId() {
         return ingredientUseId;
@@ -38,6 +44,14 @@ public class IngredientUse {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public Integer getQuantityInGrams() {
+        return quantityInGrams;
+    }
+
+    public void setQuantityInGrams(Integer quantityInGrams) {
+        this.quantityInGrams = quantityInGrams;
     }
 
     public Ingredient getIngredient() {

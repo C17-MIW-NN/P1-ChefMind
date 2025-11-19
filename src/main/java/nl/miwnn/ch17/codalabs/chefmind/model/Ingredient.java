@@ -18,6 +18,8 @@ public class Ingredient {
     @Column(unique = true)
     private String ingredientName;
 
+    private Integer kcalPer100g;
+
     @OneToMany(mappedBy = "ingredient")
     private List<IngredientUse> ingredientUses;
 
@@ -35,6 +37,14 @@ public class Ingredient {
 
     public void setIngredientName(String ingredientName) {
         this.ingredientName = ingredientName;
+    }
+
+    public Integer getKcalPer100g() {
+        return kcalPer100g;
+    }
+
+    public void setKcalPer100g(Integer kcalPer100g) {
+        this.kcalPer100g = kcalPer100g;
     }
 
     public List<IngredientUse> getIngredientUses() {

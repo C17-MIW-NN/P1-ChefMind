@@ -6,10 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Assib Pajman
- *
- */
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     Optional<Recipe> findByName(String name);
     List<Recipe> findByCategories_CategoryId(Long categoryId);

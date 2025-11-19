@@ -43,9 +43,4 @@ public class Category {
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
-
-//    @Override
-//    public String toString() {
-//        return categoryName;
-//    }
 }

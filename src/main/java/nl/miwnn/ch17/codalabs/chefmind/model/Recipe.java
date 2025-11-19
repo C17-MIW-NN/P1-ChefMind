@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author Assib Pajman
- *
+ * An entity that includes a set of instructions and other details for preparing a dish
  */
 @Entity
 public class Recipe {

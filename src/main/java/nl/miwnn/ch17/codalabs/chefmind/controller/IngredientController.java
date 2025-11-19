@@ -1,6 +1,5 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
-import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

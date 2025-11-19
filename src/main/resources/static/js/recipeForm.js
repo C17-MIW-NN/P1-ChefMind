@@ -4,9 +4,17 @@ const addIngredientButton = document.getElementById("addIngredient");
 addIngredientButton.addEventListener("click", function () {
     const ingredientLine = document.createElement("div");
     ingredientLine.innerHTML = `
-      <input type="text" name="ingredientNames[]" placeholder="Ingredient">
-      <input type="text" name="amounts[]" placeholder="Amount">
-      <button type="button" class="remove">Remove</button>
+      <div class="row g-3">
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="ingredientNames[]" placeholder="Ingredient">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="amounts[]" placeholder="Amount">
+        </div>
+        <div class="col">
+            <button type="button" class="remove">Remove</button>
+        </div>
+      </div>
     `;
     ingredientsContainer.appendChild(ingredientLine);
 });
@@ -18,17 +26,17 @@ let count = parseInt(instructionsContainer.dataset.count);
 addInstructionButton.addEventListener("click", function () {
     const instructionLine = document.createElement("div");
 
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Add a step";
-    input.name = `instructions[${count}]`;
+    instructionLine.innerHTML = `
+        <div class="row g-3">
+            <div class="col-md-9">
+                <input type="text" class="form-control" placeholder="Add a step" name="instructions[${count}]">
+            </div>
+            <div class="col">
+                <button type="button" class="remove">Remove</button>
+            </div>
+          </div>
+    `;
 
-    const removeButton = document.createElement("button");
-    removeButton.type = "button";
-    removeButton.textContent = "Remove";
-    removeButton.className = "remove";
-
-    instructionLine.append(input, removeButton);
     instructionsContainer.appendChild(instructionLine);
 
     count++;
@@ -39,6 +47,6 @@ instructionsContainer.addEventListener("click", removeClick);
 
 function removeClick(e) {
     if (e.target.classList.contains("remove")) {
-    e.target.parentElement.remove();
+    e.target.parentElement.parentElement.remove();
     }
 }

@@ -219,3 +219,16 @@ body {
 .input-group-text {
     margin-bottom: 4px;
 }
+
+.search-button {
+    /*display: flex;*/
+    /*padding: 2px 12px;*/
+    background-color: #1D6813;
+    color: #F6F1EC;
+    border-radius: 4px;
+    border: none;
+    /*text-decoration: none;*/
+    /*margin-right: 12px;*/
+    /*margin-top: 8px;*/
+    /*box-shadow: none;*/
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe details</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+    <link rel="stylesheet" type="text/css" href="/css/recipeOverview.css" />
+</head>
+<body>
+    <div th:replace="~{fragments/general :: navbar}"></div>
+
+    <h1 style="padding-top: 30px">Search results for "<span th:text="${query}"></span>"</h1>
+
+    <div th:fragment="recipeCards"class="recipe-grid">
+        <div th:each="recipe : ${recipes}">
+            <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" class="hyperlink-card">
+                <div class="recipe-card">
+                    <img th:src="${recipe.image}" alt="nothing">
+                    <div class="recipe-info">
+                        <h3 th:text="${recipe.name}"></h3>
+                        <h4><i class="bi bi-people-fill" style="font-size: 1.1rem;"></i></i></i>️
+                            <span th:text="${recipe.servingSize}">4</span> servings &nbsp;
+                            <i class="bi bi-clock-fill" style="font-size: 0.9rem;"></i>
+                            <span th:text="${recipe.calculateTotalTime()}">30</span> min
+                        </h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

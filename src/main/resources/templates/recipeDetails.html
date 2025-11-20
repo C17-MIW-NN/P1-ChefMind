@@ -30,6 +30,7 @@
         <p><b>Prep time:</b> <span th:text="${recipe.prepTime}"></span> minutes</p>
         <p><b>Cooking time:</b> <span th:text="${recipe.cookingTime}"></span> minutes</p>
         <p><b>Total time:</b> <span th:text="${recipe.calculateTotalTime()}"></span> minutes</p>
+        <p><b>Total kcal:</b> <span th:text="${recipe.calculateTotalKcalPerServing()}"></span> kcal per serving</p>
         <p><b>Categories:</b>
             <span th:each="category : ${recipe.categories}">
                 <a class="categoryButton" th:href="@{/category/detail/{name}(name = ${category.categoryName})}"

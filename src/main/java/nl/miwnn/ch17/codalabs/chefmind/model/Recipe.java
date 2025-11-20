@@ -35,6 +35,14 @@ public class Recipe {
         return this.prepTime + this.cookingTime;
     }
 
+    public Long calculateTotalKcalPerServing() {
+        Double totalKcal = 0.0;
+        for (IngredientUse ingredientUse : ingredientUses) {
+            totalKcal += ingredientUse.calculateKcalIngredientUse();
+        }
+        return Math.round(totalKcal / servingSize);
+    }
+
     public Long getRecipeId() {
         return recipeId;
     }

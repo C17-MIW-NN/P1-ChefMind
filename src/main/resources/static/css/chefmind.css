@@ -192,8 +192,19 @@ body {
     background-color: #E04507;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 2px 10px;
+    text-decoration: none;
+    margin-right: 12px;
+    margin-top: 8px;
+}
+
+.save {
+    background-color: #1D6813;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 31px;
     text-decoration: none;
     margin-right: 12px;
     margin-top: 8px;

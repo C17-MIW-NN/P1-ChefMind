@@ -18,7 +18,7 @@ addIngredientButton.addEventListener("click", function () {
             <input type="number" class="form-control" name="kcalPer100g[]">
         </div>
         <div class="col">
-            <button type="button" class="remove">Remove</button>
+            <button type="button" class="remove"><i class="bi bi-trash-fill"></i> Remove</button>
         </div>
       </div>
     `;
@@ -38,7 +38,7 @@ addInstructionButton.addEventListener("click", function () {
                 <input type="text" class="form-control" placeholder="Add a step" name="instructions[${count}]">
             </div>
             <div class="col">
-                <button type="button" class="remove">Remove</button>
+                <button type="button" class="remove"><i class="bi bi-trash-fill"></i> Remove</button>
             </div>
           </div>
     `;

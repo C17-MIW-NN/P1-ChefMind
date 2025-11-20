@@ -3,16 +3,17 @@ package nl.miwnn.ch17.codalabs.chefmind.controller;
 import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
 import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
-import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
-import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientUseRepository;
-import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
-import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
+import nl.miwnn.ch17.codalabs.chefmind.repositories.*;
+import nl.miwnn.ch17.codalabs.chefmind.service.ImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,13 +29,17 @@ public class RecipeController {
     private final IngredientRepository ingredientRepository;
     private final IngredientUseRepository ingredientUseRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                            IngredientUseRepository ingredientUseRepository, CategoryRepository categoryRepository) {
+                            IngredientUseRepository ingredientUseRepository, CategoryRepository categoryRepository, ImageRepository imageRepository, ImageService imageService, ImageRepository imageRepository1) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.ingredientUseRepository = ingredientUseRepository;
         this.categoryRepository = categoryRepository;
+        this.imageService = imageService;
+        this.imageRepository = imageRepository1;
     }
 
     @GetMapping("/all")
@@ -67,7 +72,11 @@ public class RecipeController {
                                      List<String> ingredientNames,
                                      @RequestParam(value = "amounts[]", required = false) List<String> amounts,
                                      BindingResult result,
-                                     Model datamodel) {
+                                     Model datamodel,
+                                     @RequestParam MultipartFile recipeImage) {
+
+        saveImage(recipeToBeSaved, result, recipeImage);
+
         checkForSameName(recipeToBeSaved, result);
 
         if (result.hasErrors()) {
@@ -85,6 +94,19 @@ public class RecipeController {
 
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
+    }
+
+    private void saveImage(Recipe recipeToBeSaved, BindingResult result, MultipartFile recipeImage) {
+        try {
+            if (!recipeImage.isEmpty()) {
+                if (!imageRepository.existsByFileName(recipeImage.getOriginalFilename())) {
+                    imageService.saveImage(recipeImage);
+                }
+                recipeToBeSaved.setImage("/image/" + recipeImage.getOriginalFilename());
+            }
+        } catch (IOException imageError) {
+            result.rejectValue("recipeImage", "imageNotSaved", "Image not saved");
+        }
     }
 
     private void makeIngredientUses(Recipe recipeToBeSaved, List<String> ingredientNames, List<String> amounts,

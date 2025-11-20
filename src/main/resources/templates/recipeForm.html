@@ -11,7 +11,7 @@
         <h1 class="h1-form" th:unless="${formRecipe.recipeId == null}" th:text="|Edit ${formRecipe.name}|"></h1>
     </div>
 
-    <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" class="recipeForm">
+    <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" class="recipeForm" enctype="multipart/form-data">
         <input type="hidden" th:field="*{recipeId}">
 
         <div class="row g-3 recipeFormField">
@@ -29,6 +29,11 @@
         <div class="recipeFormField">
             <label class="form-label">Photo URL</label>
             <input type="text" class="form-control" th:field="*{image}">
+        </div>
+
+        <div class="recipeFormField">
+            <label for="imageFile" class="form-label">Recipe image:</label>
+            <input type="file" id="imageFile" name="recipeImage" accept="image/*">
         </div>
 
         <div class="row g-3 recipeFormField">

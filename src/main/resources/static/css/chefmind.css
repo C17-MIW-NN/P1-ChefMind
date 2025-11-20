@@ -162,11 +162,6 @@ body {
     border: 20px #1D6813;
 }
 
-.button-custom:hover{
-    /*background-color: #064119;*/
-    color: #F6F1EC;
-}
-
 .recipe-part {
     padding: 16px 2.5rem 16px 2.5rem;
     border-bottom: 2px solid;
@@ -184,7 +179,16 @@ body {
     margin-bottom: 4px;
 }
 
+.recipeFormFieldCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
 .h1-form {
+    margin-top: 1.5rem;
     text-align: center;
 }
 
@@ -193,7 +197,7 @@ body {
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 2px 10px;
+    padding: 2px 15px;
     text-decoration: none;
     margin-right: 12px;
     margin-top: 8px;
@@ -206,8 +210,6 @@ body {
     border-radius: 4px;
     padding: 10px 31px;
     text-decoration: none;
-    margin-right: 12px;
-    margin-top: 8px;
 }
 
 .form-control {

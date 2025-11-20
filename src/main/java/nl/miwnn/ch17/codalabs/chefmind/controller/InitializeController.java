@@ -44,19 +44,19 @@ public class InitializeController {
     }
 
     private void initializeDB() {
-        Category breakfast = makeCategory("breakfast");
-        Category lunch = makeCategory("lunch");
-        Category dinner = makeCategory("dinner");
-        Category desserts = makeCategory("desserts");
-        Category salads = makeCategory("salads");
-        Category soups = makeCategory("soups");
-        Category cookies = makeCategory("cookies");
-        Category vegetarian = makeCategory("vegetarian");
-        Category glutenfree = makeCategory("gluten-free");
+        Category breakfast = makeCategory("Breakfast");
+        Category lunch = makeCategory("Lunch");
+        Category dinner = makeCategory("Dinner");
+        Category desserts = makeCategory("Desserts");
+        Category salads = makeCategory("Salads");
+        Category soups = makeCategory("Soups");
+        Category cookies = makeCategory("Cookies");
+        Category vegetarian = makeCategory("Vegetarian");
+        Category glutenfree = makeCategory("Gluten-free");
         Category italian = makeCategory("Italian");
         Category greek = makeCategory("Greek");
         Category korean = makeCategory("Korean");
-        Category favourites = makeCategory("favourites");
+        Category favourites = makeCategory("Favourites");
 
         Ingredient salt = makeIngredient("salt", 0);
         Ingredient pepper = makeIngredient("pepper", 255);
@@ -83,7 +83,7 @@ public class InitializeController {
         Ingredient egg = makeIngredient("egg", 143);
         Ingredient chocolateChips = makeIngredient("chocolate chips", 479);
 
-        Recipe cheeseSandwich = makeRecipe("Cheese sandwich", 1, 5, 0,
+        Recipe cheeseSandwich = makeRecipe("Cheese Sandwich", 1, 5, 0,
                 "Cut slices of cheese with a cheese slicer.;Place the cheese on a piece of bread.;" +
                         "Top off with another piece of bread. Voilà!",
                 "https://californiaavocado.com/wp-content/uploads/2023/04/" +
@@ -105,7 +105,7 @@ public class InitializeController {
         makeIngredientUse(spaghettiBolognese, tomato, "5", 400);
         makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons", 10);
 
-        Recipe vegetableSoup = makeRecipe("Vegetable soup", 6, 10, 30,
+        Recipe vegetableSoup = makeRecipe("Vegetable Soup", 6, 10, 30,
                 "Sauté onion, carrot, and celery.;Add diced tomatoes, broth, and seasonings.;" +
                         "Simmer until vegetables are tender.;Adjust salt and pepper before serving.",
                 "https://www.allrecipes.com/thmb/wYELcGueAb7YS20dQ95t22T1CDs=/" +
@@ -128,7 +128,7 @@ public class InitializeController {
         makeIngredientUse(pancakes, sugar, "25g", 25);
         makeIngredientUse(pancakes, egg, "1", 100);
 
-        Recipe chocolateChipCookies = makeRecipe("Chocolate chip cookies", 24,
+        Recipe chocolateChipCookies = makeRecipe("Chocolate Chip Cookies", 24,
                 10, 12,
                 "Mix butter, sugar, and egg.;Add flour, baking powder, and chocolate chips.;" +
                         "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "https://www.allrecipes" +

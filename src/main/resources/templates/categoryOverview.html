@@ -3,6 +3,10 @@
 
 <head     th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Your Categories</title>
+
+    <script>
+
+    </script>
 </head>
 
 <body>
@@ -18,26 +22,32 @@
                 <input type="hidden" th:field="*{categoryId}">
 
                 <input placeholder="New Category" class="formField" type="text" th:field="*{categoryName}" required>
-                <input class="button-custom" type="submit" value="add">
+                <input class="categoryFormButton" type="submit" value="add">
             </form>
 
             <hr>
 
             <p class="categoryLabel">Categories</p>
+
+            <a class="categoryButton"
+               th:href="@{/category/all}"
+               th:classappend="${activeCategory} == null ? ' active' : ''">All</a>
+
+            <div class="categoryButtonContainer" th:each="category : ${allCategories}">
                 <a class="categoryButton"
-                   th:href="@{/category/all}"
-                   th:classappend="${activeCategory} == null ? ' active' : ''">All</a>
-                <a class="categoryButton"
-                   th:each="category : ${allCategories}"
-                   th:href="@{/category/all(name=${category.categoryName})}"
+                   th:href="@{/category/{name}(name=${category.categoryName})}"
                    th:text="${category.categoryName}"
                    th:classappend="${activeCategory} == ${category.categoryName} ? ' active' : ''"></a>
+
+                <a class="categoryButtonRemove bi bi-trash3"
+                   th:href="@{/category/delete/{categoryId}(categoryId = ${category.categoryId})}"></a>
+            </div>
         </div>
     </div>
 
     <div class="rightContainer">
-        <div class="categoryForm">
-            <h1>Recipes</h1>
+        <div>
+            <h1><span th:text="${activeCategory} ?: 'All'"></span></h1>
         </div>
 
         <div th:replace="~{fragments/general :: recipeCards}"></div>

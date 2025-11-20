@@ -19,7 +19,6 @@ import java.util.Optional;
  */
 
 @Controller
-@RequestMapping("/category")
 public class CategoryController {
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
@@ -29,8 +28,15 @@ public class CategoryController {
         this.recipeRepository = recipeRepository;
     }
 
-    @GetMapping("/all")
-    public String showCategoryOverview (@RequestParam(value = "name", required = false) String name,
+    @GetMapping ({"/category/", "/"})
+    public String showCategoryOverview (Model datamodel) {
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
+
+        return "redirect:/category/all";
+    }
+
+    @GetMapping("/category/{name}")
+    public String showRecipesPerCategory (@PathVariable String name,
                                             Model datamodel){
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", new Category());
@@ -44,6 +50,7 @@ public class CategoryController {
 
             datamodel.addAttribute("recipes", recipesPerCategory);
             datamodel.addAttribute("activeCategory", name);
+            datamodel.addAttribute("category", category.get());
         }
 
         return "categoryOverview";
@@ -52,9 +59,10 @@ public class CategoryController {
     @GetMapping("/add")
     public String showCategoryForm(Model datamodel) {
         return showCategoryForm(datamodel, new Category());
+
     }
 
-    @PostMapping("/new")
+    @PostMapping("/category/new")
     public String saveNewCategory (@ModelAttribute("formCategory") Category categoryToBeSaved, BindingResult result,
                                    Model datamodel) {
         Optional<Category> categoryWithSameName =
@@ -71,6 +79,23 @@ public class CategoryController {
         }
 
         categoryRepository.save(categoryToBeSaved);
+        return "redirect:/category/all";
+    }
+
+    @GetMapping("/category/delete/{categoryId}")
+    public String deleteCategory(@PathVariable("categoryId") Long categoryId) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+
+        if (optionalCategory.isPresent()) {
+            Category categoryToBeDeleted = optionalCategory.get();
+
+            for (Recipe recipe : categoryToBeDeleted.getRecipes()) {
+                recipe.getCategories().remove(categoryToBeDeleted);
+            }
+
+            categoryRepository.deleteById(categoryId);
+        }
+
         return "redirect:/category/all";
     }
 

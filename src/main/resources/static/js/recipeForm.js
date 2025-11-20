@@ -12,10 +12,10 @@ addIngredientButton.addEventListener("click", function () {
             <input type="text" class="form-control" name="amounts[]" placeholder="Amount">
         </div>
         <div class="col">
-            <input type="text" class="form-control" name="quantitiesInGrams[]">
+            <input type="number" class="form-control" name="quantitiesInGrams[]">
         </div>
         <div class="col">
-            <input type="text" class="form-control" name="kcalPer100g[]">
+            <input type="number" class="form-control" name="kcalPer100g[]">
         </div>
         <div class="col">
             <button type="button" class="remove">Remove</button>

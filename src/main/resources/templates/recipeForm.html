@@ -22,7 +22,9 @@
 
             <div class="col-md-3">
                 <label class="form-label">Serving size</label>
-                <input type="text" class="form-control" th:field="*{servingSize}">
+                <input type="number" min="1" class="form-control" th:field="*{servingSize}" required
+                       oninvalid="this.setCustomValidity('Please enter a number')"
+                       oninput="this.setCustomValidity('')">
             </div>
         </div>
 
@@ -40,7 +42,9 @@
             <div class="col-md-6">
                 <label class="col-form-label">Prep time</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" th:field="*{prepTime}" aria-describedby="minutes" required>
+                    <input type="number" min="0" class="form-control" th:field="*{prepTime}" aria-describedby="minutes"
+                           required oninvalid="this.setCustomValidity('Please enter a number')"
+                           oninput="this.setCustomValidity('')">
                     <span class="input-group-text" id="minutes">minutes</span>
                 </div>
             </div>
@@ -48,8 +52,10 @@
             <div class="col-md-6">
                 <label class="col-form-label">Cooking time</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" th:field="*{cookingTime}" aria-describedby="cookingMinutes"
-                           required>
+                    <input type="number" min="0" class="form-control" th:field="*{cookingTime}"
+                           aria-describedby="cookingMinutes" required
+                           oninvalid="this.setCustomValidity('Please enter a number')"
+                           oninput="this.setCustomValidity('')">
                     <span class="input-group-text" id="cookingMinutes">minutes</span>
                 </div>
             </div>
@@ -85,11 +91,11 @@
                                placeholder="Amount">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" name="quantitiesInGrams[]"
+                        <input type="number" class="form-control" name="quantitiesInGrams[]"
                                th:value="${use.quantityInGrams}">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" name="kcalPer100g[]"
+                        <input type="number" class="form-control" name="kcalPer100g[]"
                         th:value="${use.ingredient.kcalPer100g}">
                     </div>
                     <div class="col">
@@ -105,10 +111,10 @@
                         <input type="text" class="form-control" name="amounts[]" placeholder="Amount">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" name="quantitiesInGrams[]">
+                        <input type="number" class="form-control" name="quantitiesInGrams[]">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" name="kcalPer100g[]">
+                        <input type="number" class="form-control" name="kcalPer100g[]">
                     </div>
                     <div class="col">
                         <button type="button" class="remove">Remove</button>
@@ -125,7 +131,7 @@
         <div class="recipeFormField">
             <label class="form-label">Instructions</label>
             <div id="instructions"
-                 th:attr="data-count=${formRecipe.instructions != null ? formRecipe.instructions.size() : 0}">
+                 th:attr="data-count=${formRecipe.instructions != null ? formRecipe.instructions.size() : 1}">
                 <div th:each="existingInstruction, iteration : *{instructions}" class="row g-3">
                     <div class="col-md-10">
                         <input type="text" class="form-control"

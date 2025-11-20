@@ -26,6 +26,13 @@
             </li>
         </ul>
     </div>
+
+    <form th:action="@{/recipe/search}" method="get">
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="search" name="query" placeholder="Look for recipe"/>
+            <button type="submit" class="search-button">Search</button>
+        </div>
+    </form>
 </nav>
 
 <div th:fragment="recipeCards"class="recipe-grid">

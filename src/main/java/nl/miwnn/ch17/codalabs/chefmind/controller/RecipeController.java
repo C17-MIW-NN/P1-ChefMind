@@ -14,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Assib Pajman
@@ -174,6 +172,26 @@ public class RecipeController {
         datamodel.addAttribute("recipe", recipeToShow.get());
 
         return "recipeDetails";
+    }
+
+    @GetMapping("/search")
+    public String searchRecipes(@RequestParam("query") String query, Model datamodel) {
+        Set<Recipe> results = searchRecipes(query);
+        datamodel.addAttribute("recipes", results);
+        datamodel.addAttribute("query", query);
+        return "recipeSearch";
+    }
+
+    public Set<Recipe> searchRecipes(String query) {
+        List<Recipe> titleResults = recipeRepository.findByNameContainingIgnoreCase(query);
+        List<Recipe> ingredientResults =
+                recipeRepository.findDistinctByIngredientUses_Ingredient_IngredientNameIgnoreCase(query);
+
+        Set<Recipe> results = new HashSet<>();
+        results.addAll(titleResults);
+        results.addAll(ingredientResults);
+
+        return results;
     }
 
     public String showRecipeForm(Model datamodel, Recipe recipe) {

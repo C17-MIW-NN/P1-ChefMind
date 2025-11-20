@@ -58,38 +58,38 @@ public class InitializeController {
         Category korean = makeCategory("Korean");
         Category favourites = makeCategory("favourites");
 
-        Ingredient salt = makeIngredient("salt");
-        Ingredient pepper = makeIngredient("pepper");
-        Ingredient oliveOil = makeIngredient("olive oil");
-        Ingredient bread = makeIngredient("bread");
-        Ingredient cheese = makeIngredient("Gouda cheese");
-        Ingredient onion = makeIngredient("onion");
-        Ingredient garlic = makeIngredient("garlic");
-        Ingredient tomato = makeIngredient("tomato");
-        Ingredient tomatoPaste = makeIngredient("tomato paste");
-        Ingredient beef = makeIngredient("beef");
-        Ingredient spaghetti = makeIngredient("spaghetti");
-        Ingredient basil = makeIngredient("basil");
-        Ingredient oregano = makeIngredient("oregano");
-        Ingredient parmesan = makeIngredient("Parmesan cheese");
-        Ingredient carrot = makeIngredient("carrot");
-        Ingredient celery = makeIngredient("celery");
-        Ingredient broth = makeIngredient("vegetable broth");
-        Ingredient flour = makeIngredient("flour");
-        Ingredient milk = makeIngredient("milk");
-        Ingredient sugar = makeIngredient("sugar");
-        Ingredient bakingPowder = makeIngredient("baking powder");
-        Ingredient butter = makeIngredient("butter");
-        Ingredient egg = makeIngredient("egg");
-        Ingredient chocolateChips = makeIngredient("chocolate chips");
+        Ingredient salt = makeIngredient("salt", 0);
+        Ingredient pepper = makeIngredient("pepper", 255);
+        Ingredient oliveOil = makeIngredient("olive oil", 884);
+        Ingredient bread = makeIngredient("bread", 265);
+        Ingredient cheese = makeIngredient("Gouda cheese", 356);
+        Ingredient onion = makeIngredient("onion", 40);
+        Ingredient garlic = makeIngredient("garlic", 149);
+        Ingredient tomato = makeIngredient("tomato", 18);
+        Ingredient tomatoPaste = makeIngredient("tomato paste", 82);
+        Ingredient beef = makeIngredient("beef", 250);
+        Ingredient spaghetti = makeIngredient("spaghetti", 371);
+        Ingredient basil = makeIngredient("basil", 23);
+        Ingredient oregano = makeIngredient("oregano", 306);
+        Ingredient parmesan = makeIngredient("Parmesan cheese", 431);
+        Ingredient carrot = makeIngredient("carrot", 41);
+        Ingredient celery = makeIngredient("celery", 16);
+        Ingredient broth = makeIngredient("vegetable broth", 25);
+        Ingredient flour = makeIngredient("flour", 364);
+        Ingredient milk = makeIngredient("milk", 61);
+        Ingredient sugar = makeIngredient("sugar", 387);
+        Ingredient bakingPowder = makeIngredient("baking powder", 53);
+        Ingredient butter = makeIngredient("Butter", 717);
+        Ingredient egg = makeIngredient("egg", 143);
+        Ingredient chocolateChips = makeIngredient("chocolate chips", 479);
 
         Recipe cheeseSandwich = makeRecipe("Cheese sandwich", 1, 5, 0,
                 "Cut slices of cheese with a cheese slicer.;Place the cheese on a piece of bread.;" +
                         "Top off with another piece of bread. Voilà!",
                 "https://californiaavocado.com/wp-content/uploads/2023/04/" +
                         "AvoBaconGrilledCheese_0011-scaled-e1682914545487.jpg", lunch);
-        makeIngredientUse(cheeseSandwich, cheese, "2 slices");
-        makeIngredientUse(cheeseSandwich, bread, "2 pieces");
+        makeIngredientUse(cheeseSandwich, cheese, "2 slices", 100);
+        makeIngredientUse(cheeseSandwich, bread, "2 pieces", 50);
 
         Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", 4, 10, 25,
                 "Sauté onion, garlic, and minced beef until browned. " +
@@ -97,13 +97,13 @@ public class InitializeController {
                         "Serve over cooked spaghetti and top with Parmesan.",
                 "https://supervalu.ie/image/var/files/real-food/recipes/Uploaded-2020/" +
                         "spaghetti-bolognese-recipe.jpg", dinner, italian);
-        makeIngredientUse(spaghettiBolognese, onion, "1");
-        makeIngredientUse(spaghettiBolognese, garlic, "2 cloves");
-        makeIngredientUse(spaghettiBolognese, salt, "to taste");
-        makeIngredientUse(spaghettiBolognese, pepper, "dash");
-        makeIngredientUse(spaghettiBolognese, spaghetti, "4 portions");
-        makeIngredientUse(spaghettiBolognese, tomato, "5");
-        makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons");
+        makeIngredientUse(spaghettiBolognese, onion, "1", 100);
+        makeIngredientUse(spaghettiBolognese, garlic, "2 cloves", 10);
+        makeIngredientUse(spaghettiBolognese, salt, "to taste", 2);
+        makeIngredientUse(spaghettiBolognese, pepper, "dash", 2);
+        makeIngredientUse(spaghettiBolognese, spaghetti, "4 portions", 350);
+        makeIngredientUse(spaghettiBolognese, tomato, "5", 400);
+        makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons", 10);
 
         Recipe vegetableSoup = makeRecipe("Vegetable soup", 6, 10, 30,
                 "Sauté onion, carrot, and celery.;Add diced tomatoes, broth, and seasonings.;" +
@@ -112,10 +112,10 @@ public class InitializeController {
                         "0x512/filters:no_upscale():max_bytes(150000):strip_icc()/" +
                         "13338-quick-and-easy-vegetable-soup-DDMFS-4x3-402702f59e7a41519515cecccaba1b80.jpg",
                 lunch, soups, vegetarian);
-        makeIngredientUse(vegetableSoup, onion, "1");
-        makeIngredientUse(vegetableSoup, carrot, "3");
-        makeIngredientUse(vegetableSoup, celery, "4 stalks");
-        makeIngredientUse(vegetableSoup, broth, "1 liter");
+        makeIngredientUse(vegetableSoup, onion, "1", 100);
+        makeIngredientUse(vegetableSoup, carrot, "3", 400);
+        makeIngredientUse(vegetableSoup, celery, "4 stalks", 400);
+        makeIngredientUse(vegetableSoup, broth, "1 liter", 1000);
 
         Recipe pancakes = makeRecipe("Pancakes", 4, 5, 15,
                 "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter.;" +
@@ -123,10 +123,10 @@ public class InitializeController {
                 "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
                         "bdbc3ce86f919fb2dcf45204579802a8/Derivates/596b2aed41a777a097e3dd5917f8381d557e0ee7.jpg",
                 breakfast);
-        makeIngredientUse(pancakes, flour, "150g");
-        makeIngredientUse(pancakes, bakingPowder, "10g");
-        makeIngredientUse(pancakes, sugar, "25g");
-        makeIngredientUse(pancakes, egg, "1");
+        makeIngredientUse(pancakes, flour, "150g", 150);
+        makeIngredientUse(pancakes, bakingPowder, "10g", 10);
+        makeIngredientUse(pancakes, sugar, "25g", 25);
+        makeIngredientUse(pancakes, egg, "1", 100);
 
         Recipe chocolateChipCookies = makeRecipe("Chocolate chip cookies", 24,
                 10, 12,
@@ -135,7 +135,7 @@ public class InitializeController {
                         ".com/thmb/dNzzgeEyacuH-RIfMI4PjWFODBM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc" +
                         "()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
                         "ddmfs-4x3-614164ea044a4845b3cca7e725ecf7bd.jpg", cookies, favourites);
-        makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams");
+        makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams", 150);
     }
 
     private Category makeCategory(String categoryName) {
@@ -147,10 +147,11 @@ public class InitializeController {
         return category;
     }
 
-    private Ingredient makeIngredient(String ingredientName) {
+    private Ingredient makeIngredient(String ingredientName, Integer kcalPer100g) {
         Ingredient ingredient = new Ingredient();
 
         ingredient.setIngredientName(ingredientName);
+        ingredient.setKcalPer100g(kcalPer100g);
 
         ingredientRepository.save(ingredient);
 
@@ -179,12 +180,14 @@ public class InitializeController {
         return recipe;
     }
 
-    private IngredientUse makeIngredientUse(Recipe recipe, Ingredient ingredient, String amount) {
+    private IngredientUse makeIngredientUse(Recipe recipe, Ingredient ingredient, String amount,
+                                            Integer quantityInGrams) {
         IngredientUse ingredientUse = new IngredientUse();
 
         ingredientUse.setRecipe(recipe);
         ingredientUse.setIngredient(ingredient);
         ingredientUse.setAmount(amount);
+        ingredientUse.setQuantityInGrams(quantityInGrams);
 
         ingredientUseRepository.save(ingredientUse);
 

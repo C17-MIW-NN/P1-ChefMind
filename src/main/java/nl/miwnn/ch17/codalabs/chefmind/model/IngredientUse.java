@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class IngredientUse {
 
-    public static final int QUANTITY_GRAMS_FOR_CALCULATING_KCAL = 100;
+    public static final double QUANTITY_GRAMS_FOR_CALCULATING_KCAL = 100.0;
     @Id
     @GeneratedValue
     private Long ingredientUseId;
@@ -26,7 +26,7 @@ public class IngredientUse {
     @ManyToOne
     private Recipe recipe;
 
-    public Integer calculateKcalIngredientUse() {
+    public Double calculateKcalIngredientUse() {
         return quantityInGrams * (ingredient.getKcalPer100g() / QUANTITY_GRAMS_FOR_CALCULATING_KCAL);
     }
 

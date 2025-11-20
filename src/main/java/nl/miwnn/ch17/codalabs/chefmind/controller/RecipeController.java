@@ -4,7 +4,6 @@ import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
 import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
-import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientUseRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
@@ -26,19 +25,17 @@ import java.util.Optional;
 public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
-    private final IngredientUseRepository ingredientUseRepository;
     private final CategoryRepository categoryRepository;
 
     public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                            IngredientUseRepository ingredientUseRepository, CategoryRepository categoryRepository) {
+                            CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
-        this.ingredientUseRepository = ingredientUseRepository;
         this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/all")
-    public String showRecipeOverview(Model datamodel, Recipe recipe) {
+    public String showRecipeOverview(Model datamodel) {
         datamodel.addAttribute("recipes", recipeRepository.findAll());
         datamodel.addAttribute("formRecipe", new Recipe());
 
@@ -63,11 +60,11 @@ public class RecipeController {
 
     @PostMapping("/save")
     public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
-                                     @RequestParam(value = "ingredientNames[]", required = false)
-                                     List<String> ingredientNames,
-                                     @RequestParam(value = "amounts[]", required = false) List<String> amounts,
-                                     BindingResult result,
-                                     Model datamodel) {
+                      @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
+                      @RequestParam(value = "amounts[]", required = false) List<String> amounts,
+                      @RequestParam(value = "quantitiesInGrams[]", required = false) List<Integer> quantitiesInGrams,
+                      @RequestParam(value = "kcalPer100g[]", required = false) List<Integer> kcalPer100gList,
+                      BindingResult result, Model datamodel) {
         checkForSameName(recipeToBeSaved, result);
 
         if (result.hasErrors()) {
@@ -78,42 +75,52 @@ public class RecipeController {
             ingredientNames = new ArrayList<>();
         }
 
-        List<IngredientUse> ingredientUses = new ArrayList<>();
-        makeIngredientUses(recipeToBeSaved, ingredientNames, amounts, ingredientUses);
-
+        List<IngredientUse> ingredientUses = makeIngredientUses(recipeToBeSaved, ingredientNames, amounts,
+                quantitiesInGrams, kcalPer100gList);
         recipeToBeSaved.setIngredientUses(ingredientUses);
 
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
     }
 
-    private void makeIngredientUses(Recipe recipeToBeSaved, List<String> ingredientNames, List<String> amounts,
-                                    List<IngredientUse> ingredientUses) {
+    private List<IngredientUse> makeIngredientUses(Recipe recipeToBeSaved, List<String> ingredientNames,
+                                                   List<String> amounts, List<Integer> quantitiesInGrams,
+                                                   List<Integer> kcalPer100gList) {
+        List<IngredientUse> ingredientUses = new ArrayList<>();
         for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
             String ingredientName = ingredientNames.get(ingredientIndex);
             String amount = amounts.size() > ingredientIndex ? amounts.get(ingredientIndex) : "";
+            Integer quantityInGrams = quantitiesInGrams.size() > ingredientIndex &&
+                    quantitiesInGrams.get(ingredientIndex) != null ? quantitiesInGrams.get(ingredientIndex) : 0;
+            Integer kcalPer100g = kcalPer100gList.size() > ingredientIndex &&
+                    kcalPer100gList.get(ingredientIndex) != null ? kcalPer100gList.get(ingredientIndex) : 0;
 
             IngredientUse use = new IngredientUse();
 
-            useExistingIngredientOrMakeNewIngredient(ingredientName, use);
-
+            useExistingIngredientOrMakeNewIngredient(ingredientName, kcalPer100g, use);
             use.setAmount(amount);
             use.setRecipe(recipeToBeSaved);
+            use.setQuantityInGrams(quantityInGrams);
 
             ingredientUses.add(use);
         }
+        return ingredientUses;
     }
 
-    private void useExistingIngredientOrMakeNewIngredient(String ingredientName, IngredientUse use) {
+    private void useExistingIngredientOrMakeNewIngredient(String ingredientName, Integer kcalPer100g,
+                                                          IngredientUse use) {
+        Ingredient ingredientToBeUsed = new Ingredient();
+
         Optional<Ingredient> optionalIngredient = ingredientRepository.findByIngredientName(ingredientName);
+
         if (optionalIngredient.isPresent()) {
-            use.setIngredient(optionalIngredient.get());
-        } else {
-            Ingredient ingredient = new Ingredient();
-            ingredient.setIngredientName(ingredientName);
-            ingredientRepository.save(ingredient);
-            use.setIngredient(ingredient);
+            ingredientToBeUsed = optionalIngredient.get();
         }
+
+        ingredientToBeUsed.setIngredientName(ingredientName);
+        ingredientToBeUsed.setKcalPer100g(kcalPer100g);
+        ingredientRepository.save(ingredientToBeUsed);
+        use.setIngredient(ingredientToBeUsed);
     }
 
     private void checkForSameName(Recipe recipeToBeSaved, BindingResult result) {

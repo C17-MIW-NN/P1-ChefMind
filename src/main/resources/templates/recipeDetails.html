@@ -4,68 +4,97 @@
     <meta charset="UTF-8">
     <title>Recipe details</title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">-->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
-
     <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
-    <link rel="stylesheet" type="text/css" href="/css/recipedetails.css" />
 </head>
 
 <body>
-    <div th:replace="~{fragments/general :: navbar}"></div>
+<div class="imageBackground">
+    <img class="imageInBackground" th:src="${recipe.image}" alt="nothing">
+</div>
 
-    <div>
-        <h1><span th:text="${recipe.name}"></span></h1>
-        <a class="button-custom" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
-            <i class="bi bi-pencil-fill"></i> Edit
-        </a>
-        <a class="button-custom" th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">
-            <i class="bi bi-trash-fill"></i> Remove
-        </a>
+<nav class="navbar">
+    <a class="nav-brand" th:href="@{/recipe/all}">ChefMind</a>
+    <div class="navbar-items">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/category/all}">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>
+            </li>
+    </div>
+</nav>
+
+<div class="informationContainer">
+    <div class="informationTopContainer">
+        <div class="recipeTitle">
+            <h1 th:text="${recipe.name}"></h1>
+            <div class="editRemove">
+                <a class="edit" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
+                    <i class="bi bi-pencil-fill"></i> Edit</a>
+                <a class="remove" th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">
+                    <i class="bi bi-trash-fill"></i> Remove</a>
+            </div>
+        </div>
+
+        <div class="recipeInfoContainer">
+            <div class="recipeInfo">
+                <p>Servings: <span th:text="${recipe.servingSize}"></span></p>
+            </div>
+            <div class="recipeInfo">
+                <p><span th:text="${recipe.calculateTotalKcalPerServing()}"></span> kcal per serving</p>
+            </div>
+            <div class="recipeInfo">
+                <p>Prep: <span th:text="${recipe.prepTime}"></span> mins</p>
+            </div>
+            <div class="recipeInfo">
+                <p>Cook: <span th:text="${recipe.cookingTime}"></span> mins</p>
+            </div>
+            <div class="recipeInfo">
+                <p>Total: <span th:text="${recipe.calculateTotalTime()}"></span> mins</p>
+            </div>
+            <div class="recipeInfo">
+                <p><b>Categories:</b>
+                    <a class="categoryLabel" th:each="category : ${recipe.categories}"
+                       th:href="@{/category/{name}(name = ${category.categoryName})}"
+                       th:text="${category.categoryName}"></a></p>
+            </div>
+        </div>
     </div>
 
+    <div class="recipeIngredientContainer">
+        <div class="recipeIngredientInnerContainer">
+            <table>
+                <thead class="ingredientTableHead">
+                <tr>
+                    <td>Ingredient</td>
+                    <td>Amount</td>
+                </tr>
+                </thead>
 
-    <div class="recipe-part">
-        <p><b>Serving size:</b> <span th:text="${recipe.servingSize}"></span></p>
-        <p><b>Prep time:</b> <span th:text="${recipe.prepTime}"></span> minutes</p>
-        <p><b>Cooking time:</b> <span th:text="${recipe.cookingTime}"></span> minutes</p>
-        <p><b>Total time:</b> <span th:text="${recipe.calculateTotalTime()}"></span> minutes</p>
-        <p><b>Total kcal:</b> <span th:text="${recipe.calculateTotalKcalPerServing()}"></span> kcal per serving</p>
-        <p><b>Categories:</b>
-            <span th:each="category : ${recipe.categories}">
-                <a class="categoryButton" th:href="@{/category/detail/{name}(name = ${category.categoryName})}"
-                        th:text="${category.categoryName}"></a>
-            </span></p>
+                <tbody>
+                <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
+                    <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
+                    <td th:text="${ingredientUse.amount}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <a><b>Instructions:</b></a>
+                <ol>
+                    <li th:each="instruction: ${recipe.instructions}"
+                        th:if="${!#strings.isEmpty(instruction)}"
+                        th:text="${instruction}"></li>
+                </ol>
+            </div>
+
+        </div>
+        <div th:replace="~{fragments/general :: footer}"></div>
     </div>
+</div>
 
-    <div class="recipe-part">
-        <table>
-            <thead>
-            <tr>
-                <th scope="col">Ingredient</th>
-                <th scope="col">Amount</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
-                <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
-                <td th:text="${ingredientUse.amount}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="recipe-part">
-        <p><b>Instructions:</b></p>
-        <ol>
-            <li th:each="instruction: ${recipe.instructions}"
-                th:if="${!#strings.isEmpty(instruction)}"
-                th:text="${instruction}"></li>
-        </ol>
-    </div>
-
-    <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
 </body>

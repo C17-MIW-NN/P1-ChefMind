@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 
 <head     th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Your Categories</title>
@@ -15,7 +15,8 @@
     <div class="leftContainer">
 
         <div class="innerContainer">
-            <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}">
+            <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}"
+                  sec:authorize="isAuthenticated()">
                 <input type="hidden" th:field="*{categoryId}">
 
                 <input placeholder="New Category" class="formField" type="text" th:field="*{categoryName}" required>

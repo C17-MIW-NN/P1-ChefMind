@@ -40,7 +40,8 @@
                 <a class="categoryButtonRemove bi bi-trash3"
                    data-bs-toggle="modal"
                    data-bs-target="#deleteModal"
-                   th:attr="data-id=${category.categoryId}"></a>
+                   th:attr="data-id=${category.categoryId}"
+                   sec:authorize="isAuthenticated()></a>
             </div>
         </div>
     </div>
@@ -80,7 +81,6 @@
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
 </div>
 
-<script src="/js/categoryOverview.js"></script>
 
 </body>
 </html>

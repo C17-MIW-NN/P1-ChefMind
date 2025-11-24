@@ -21,8 +21,8 @@ public class ChefMindSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/recipe/all", "recipe/detail/*").permitAll()
-                        .requestMatchers("/category/*", "/author/details/*", "/image/**").permitAll()
+                        .requestMatchers("/", "/recipe/all", "recipe/detail/*", "recipe/search").permitAll()
+                        .requestMatchers("/category/*", "/image/**").permitAll()
                         .requestMatchers("/css/**", "/webjars/**").permitAll()
                         .anyRequest().authenticated()
                 )

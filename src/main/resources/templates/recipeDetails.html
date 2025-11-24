@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Recipe details</title>
@@ -30,7 +30,7 @@
     <div class="informationTopContainer">
         <div class="recipeTitle">
             <h1 th:text="${recipe.name}"></h1>
-            <div class="editRemove">
+            <div class="editRemove" sec:authorize="isAuthenticated()">
                 <a class="edit" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
                     <i class="bi bi-pencil-fill"></i> Edit</a>
                 <button class="remove" data-bs-toggle="modal" data-bs-target="#recipeModal">

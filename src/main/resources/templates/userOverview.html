@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>All users</title>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <div class="users-page">
+        <h1>All ChefMind users</h1>
+
+        <ul>
+            <li th:each="user : ${allUsers}" th:text="${user.username}"></li>
+        </ul>
+
+        <button type="button"
+                class="button-custom"
+                data-bs-toggle="modal" data-bs-target="#newForm">
+            <i class="bi bi-plus"></i> Add user
+        </button>
+    </div>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+<div th:replace="~{fragments/chefminduser :: userFormModal(${formUser}, ${#fields})}"></div>
+
+</body>
+</html>

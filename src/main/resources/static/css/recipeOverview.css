@@ -1,6 +1,6 @@
 .recipe-grid {
     display: grid;
-    grid-template-columns: 300px 300px 300px;
+    grid-template-columns: 250px 250px 250px;
     gap: 50px;
     justify-content: center;
 }
@@ -11,7 +11,7 @@
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 
-    width: 300px;
+    width: 250px;
     height: auto;
 
     transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -54,14 +54,9 @@
     display: block;
 }
 
-/*h1 {*/
-/*    padding-bottom: 30px;*/
-/*    padding-left: 28px;*/
-/*}*/
-
 .add-card {
     height: 250px;
-    width: 300px;
+    width: 250px;
     background-color: #064119;
     color: #F6F1EC;
     font-size: 3rem;

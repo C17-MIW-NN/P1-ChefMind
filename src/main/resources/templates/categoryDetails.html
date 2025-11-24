@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Category details</title>
-
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
-
-    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
-    <link rel="stylesheet" type="text/css" href="/css/recipeOverview.css" />
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Category Details</title>
 </head>
 <body>
 

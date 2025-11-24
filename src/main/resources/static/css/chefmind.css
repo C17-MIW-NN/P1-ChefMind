@@ -40,17 +40,12 @@ body {
     background-color: #ede8e3;
 }
 
-/*.leftContainer {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    !*align-items: center;*!*/
-/*    min-height: 100%;*/
-/*    min-width: 30vw;*/
-/*}*/
-
 .leftContainer {
     display: flex;
     flex-direction: column;
+    /*align-items: center;*/
+    padding-left: 12px;
+    padding-top: 12px;
     min-height: 100%;
     min-width: 27vw;
 }
@@ -59,6 +54,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding-top: 12px;
     min-height: 100%;
     min-width: 70vw;
 }
@@ -386,6 +382,10 @@ body {
 
 .h1 {
     margin: 0px;
+}
+
+.h1Category {
+    margin-bottom: 24px;
 }
 
 .users-page {

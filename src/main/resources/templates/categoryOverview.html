@@ -19,8 +19,8 @@
                   sec:authorize="isAuthenticated()">
                 <input type="hidden" th:field="*{categoryId}">
 
-                <input placeholder="New Category" class="formField" type="text" th:field="*{categoryName}" required>
-                <input class="categoryFormButton" type="submit" value="add">
+                <input placeholder="New category" class="formField" type="text" th:field="*{categoryName}" required>
+                <input class="categoryFormButton" type="submit" value="Add">
             </form>
 
             <hr>
@@ -29,7 +29,7 @@
 
             <a class="categoryButton"
                th:href="@{/category/all}"
-               th:classappend="${activeCategory} == null ? ' active' : ''">All</a>
+               th:classappend="${activeCategory} == null ? ' active' : ''">All recipes</a>
 
             <div class="categoryButtonContainer" th:each="category : ${allCategories}">
                 <a class="categoryButton"
@@ -64,7 +64,7 @@
 
     <div class="rightContainer">
         <div>
-            <h1><span th:text="${activeCategory} ?: 'All'"></span></h1>
+            <h1 class="h1Category"><span th:text="${activeCategory} ?: 'All recipes'"></span></h1>
         </div>
 
         <div th:replace="~{fragments/general :: recipeCards}"></div>

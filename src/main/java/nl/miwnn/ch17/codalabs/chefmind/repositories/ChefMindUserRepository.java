@@ -9,4 +9,5 @@ import java.util.Optional;
  */
 public interface ChefMindUserRepository extends JpaRepository<ChefMindUser, Long> {
     Optional<ChefMindUser> findByUsername(String username);
+    boolean existsByUsername(String username);
 }

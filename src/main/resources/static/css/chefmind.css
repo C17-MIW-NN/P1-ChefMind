@@ -76,7 +76,7 @@ body {
     display: inline-block;
     padding: 2px 8px 2px 8px;
     border-radius: 2px;
-    background-color: #1D6813;
+    background-color: lightgrey;
     color: #F6F1EC;
 }
 
@@ -90,6 +90,12 @@ body {
     color: #E04507;
 }
 
+.categoryButtonRemove:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
 .categoryButtonContainer {
     display: flex;
     flex-direction: row;
@@ -97,7 +103,7 @@ body {
 }
 
 .categoryButtonContainer:hover {
-    background-color: #1D6813;
+    background-color: lightgrey;
 }
 
 .categoryFormButton{

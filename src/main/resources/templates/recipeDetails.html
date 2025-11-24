@@ -33,6 +33,9 @@
             <div class="editRemove" sec:authorize="isAuthenticated()">
                 <a class="edit" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
                     <i class="bi bi-pencil-fill"></i> Edit</a>
+                <button class="remove" data-bs-toggle="modal" data-bs-target="#recipeModal">
+                    <i class="bi bi-trash-fill"></i>Remove</button>
+
                 <a class="remove" th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">
                     <i class="bi bi-trash-fill"></i> Remove</a>
             </div>

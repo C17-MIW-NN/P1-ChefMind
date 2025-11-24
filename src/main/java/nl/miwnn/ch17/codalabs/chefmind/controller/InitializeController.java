@@ -1,13 +1,11 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
-import nl.miwnn.ch17.codalabs.chefmind.model.Category;
-import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
-import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
-import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
+import nl.miwnn.ch17.codalabs.chefmind.model.*;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.CategoryRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.IngredientUseRepository;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.RecipeRepository;
+import nl.miwnn.ch17.codalabs.chefmind.service.ChefMindUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
@@ -25,15 +23,17 @@ public class InitializeController {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
     private final IngredientUseRepository ingredientUseRepository;
+    private final ChefMindUserService chefMindUserService;
 
     public InitializeController(CategoryRepository categoryRepository,
                                 RecipeRepository recipeRepository,
                                 IngredientRepository ingredientRepository,
-                                IngredientUseRepository ingredientUseRepository) {
+                                IngredientUseRepository ingredientUseRepository, ChefMindUserService chefMindUserService) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.ingredientUseRepository = ingredientUseRepository;
+        this.chefMindUserService = chefMindUserService;
     }
 
     @EventListener
@@ -44,6 +44,9 @@ public class InitializeController {
     }
 
     private void initializeDB() {
+        makeUser("John", "ilovepizza");
+        makeUser("Jane", "cookies123");
+
         Category breakfast = makeCategory("Breakfast");
         Category lunch = makeCategory("Lunch");
         Category dinner = makeCategory("Dinner");
@@ -136,6 +139,16 @@ public class InitializeController {
                         "()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
                         "ddmfs-4x3-614164ea044a4845b3cca7e725ecf7bd.jpg", cookies, favourites);
         makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams", 150);
+    }
+
+    private ChefMindUser makeUser(String username, String password) {
+        ChefMindUser user = new ChefMindUser();
+
+        user.setUsername(username);
+        user.setPassword(password);
+
+        chefMindUserService.saveUser(user);
+        return user;
     }
 
     private Category makeCategory(String categoryName) {

@@ -37,7 +37,7 @@
                    th:text="${category.categoryName}"
                    th:classappend="${activeCategory} == ${category.categoryName} ? ' active' : ''"></a>
 
-                <a class="categoryButtonRemove bi bi-trash3"
+                <a class="categoryButtonRemove bi bi-trash3" sec:authorize="isAuthenticated()"
                    th:href="@{/category/delete/{categoryId}(categoryId = ${category.categoryId})}"></a>
             </div>
         </div>

@@ -52,6 +52,10 @@ public class Recipe {
     }
 
     public Long calculateTotalKcalPerServing() {
+        if (servingSize <= 0) {
+            throw new IllegalStateException("Serving size must be greater than 0");
+        }
+
         Double totalKcal = 0.0;
         for (IngredientUse ingredientUse : ingredientUses) {
             totalKcal += ingredientUse.calculateKcalIngredientUse();

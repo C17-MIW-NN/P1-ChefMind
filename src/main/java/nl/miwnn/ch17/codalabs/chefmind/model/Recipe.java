@@ -1,6 +1,10 @@
 package nl.miwnn.ch17.codalabs.chefmind.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.List;
 
@@ -15,10 +19,22 @@ public class Recipe {
     private Long recipeId;
 
     @Column(unique = true)
+    @NotNull(message = "Recipe name is required")
     private String name;
+
+    @NotNull(message = "Serving size is required")
+    @Min(value = 1, message = "Serving size must be between 1 and 1000")
+    @Max(value = 1000, message = "Serving size must be between 1 and 1000")
     private Integer servingSize;
+
+    @NotNull(message = "Prep time is required")
+    @PositiveOrZero(message = "Prep time cannot be negative")
     private Integer prepTime;
+
+    @NotNull(message = "Cooking time is required")
+    @PositiveOrZero(message = "Cooking time cannot be negative")
     private Integer cookingTime;
+
     private String image = "https://arthurmillerfoundation.org/wp-content/uploads/2018/06/default-placeholder.png";
 
     @ElementCollection

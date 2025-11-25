@@ -17,14 +17,16 @@
         <div class="row g-3 recipeFormField">
             <div class="col-md-9">
                 <label class="form-label">Recipe name</label>
-                <input type="text" class="form-control" th:field="*{name}" required>
+                <input type="text" class="form-control" th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')} ? ' is-invalid' : ''" required>
+                <div class="invalid-feedback" th:errors="*{name}"></div>
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Serving size</label>
-                <input type="number" min="1" class="form-control" th:field="*{servingSize}" required
-                       oninvalid="this.setCustomValidity('Please enter a number')"
-                       oninput="this.setCustomValidity('')">
+                <input type="number" class="form-control" th:field="*{servingSize}"
+                       th:classappend="${#fields.hasErrors('servingSize')} ? ' is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{servingSize}"></div>
             </div>
         </div>
 
@@ -42,21 +44,20 @@
             <div class="col-md-6">
                 <label class="col-form-label">Prep time</label>
                 <div class="input-group">
-                    <input type="number" min="0" class="form-control" th:field="*{prepTime}" aria-describedby="minutes"
-                           required oninvalid="this.setCustomValidity('Please enter a number')"
-                           oninput="this.setCustomValidity('')">
-                    <span class="input-group-text" id="minutes">minutes</span>
+                    <input type="number" class="form-control" th:field="*{prepTime}"
+                           th:classappend="${#fields.hasErrors('prepTime')} ? ' is-invalid' : ''">
+                    <span class="input-group-text">minutes</span>
+                    <div class="invalid-feedback" th:errors="*{prepTime}"></div>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <label class="col-form-label">Cooking time</label>
                 <div class="input-group">
-                    <input type="number" min="0" class="form-control" th:field="*{cookingTime}"
-                           aria-describedby="cookingMinutes" required
-                           oninvalid="this.setCustomValidity('Please enter a number')"
-                           oninput="this.setCustomValidity('')">
-                    <span class="input-group-text" id="cookingMinutes">minutes</span>
+                    <input type="number" class="form-control" th:field="*{cookingTime}"
+                           th:classappend="${#fields.hasErrors('cookingTime')} ? ' is-invalid' : ''">
+                    <span class="input-group-text">minutes</span>
+                    <div class="invalid-feedback" th:errors="*{cookingTime}"></div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
+import jakarta.validation.Valid;
 import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
 import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
@@ -63,12 +64,13 @@ public class RecipeController {
     }
 
     @PostMapping("/save")
-    public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
+    public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") @Valid Recipe recipeToBeSaved,
+                                     BindingResult result, Model datamodel,
                       @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
                       @RequestParam(value = "amounts[]", required = false) List<String> amounts,
                       @RequestParam(value = "quantitiesInGrams[]", required = false) List<Integer> quantitiesInGrams,
                       @RequestParam(value = "kcalPer100g[]", required = false) List<Integer> kcalPer100gList,
-                      BindingResult result, Model datamodel, @RequestParam MultipartFile recipeImage) {
+                      @RequestParam MultipartFile recipeImage) {
 
         saveImage(recipeToBeSaved, result, recipeImage);
 

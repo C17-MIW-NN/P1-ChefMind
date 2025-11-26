@@ -44,8 +44,8 @@ public class InitializeController {
     }
 
     private void initializeDB() {
-        makeUser("John", "ilovepizza");
-        makeUser("Jane", "cookies123");
+        ChefMindUser john = makeUser("John", "ilovepizza");
+        ChefMindUser jane = makeUser("Jane", "cookies123");
 
         Category breakfast = makeCategory("Breakfast");
         Category lunch = makeCategory("Lunch");
@@ -86,7 +86,7 @@ public class InitializeController {
         Ingredient egg = makeIngredient("egg", 143);
         Ingredient chocolateChips = makeIngredient("chocolate chips", 479);
 
-        Recipe cheeseSandwich = makeRecipe("Cheese Sandwich", 1, 5, 0,
+        Recipe cheeseSandwich = makeRecipe("Cheese Sandwich", john, 1, 5, 0,
                 "Cut slices of cheese with a cheese slicer.;Place the cheese on a piece of bread.;" +
                         "Top off with another piece of bread. Voilà!",
                 "https://californiaavocado.com/wp-content/uploads/2023/04/" +
@@ -94,7 +94,7 @@ public class InitializeController {
         makeIngredientUse(cheeseSandwich, cheese, "2 slices", 100);
         makeIngredientUse(cheeseSandwich, bread, "2 pieces", 50);
 
-        Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", 4, 10, 25,
+        Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", john, 4, 10, 25,
                 "Sauté onion, garlic, and minced beef until browned. " +
                         "Add tomato paste, crushed tomatoes, herbs, salt, and pepper.;Simmer 30 minutes.;" +
                         "Serve over cooked spaghetti and top with Parmesan.",
@@ -108,7 +108,7 @@ public class InitializeController {
         makeIngredientUse(spaghettiBolognese, tomato, "5", 400);
         makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons", 10);
 
-        Recipe vegetableSoup = makeRecipe("Vegetable Soup", 6, 10, 30,
+        Recipe vegetableSoup = makeRecipe("Vegetable Soup", john, 6, 10, 30,
                 "Sauté onion, carrot, and celery.;Add diced tomatoes, broth, and seasonings.;" +
                         "Simmer until vegetables are tender.;Adjust salt and pepper before serving.",
                 "https://www.allrecipes.com/thmb/wYELcGueAb7YS20dQ95t22T1CDs=/" +
@@ -120,7 +120,7 @@ public class InitializeController {
         makeIngredientUse(vegetableSoup, celery, "4 stalks", 400);
         makeIngredientUse(vegetableSoup, broth, "1 liter", 1000);
 
-        Recipe pancakes = makeRecipe("Pancakes", 4, 5, 15,
+        Recipe pancakes = makeRecipe("Pancakes", jane, 4, 5, 15,
                 "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter.;" +
                         "Cook on a greased pan until bubbles form.;Flip and cook until golden.;Serve with syrup.",
                 "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
@@ -131,7 +131,7 @@ public class InitializeController {
         makeIngredientUse(pancakes, sugar, "25g", 25);
         makeIngredientUse(pancakes, egg, "1", 100);
 
-        Recipe chocolateChipCookies = makeRecipe("Chocolate Chip Cookies", 24,
+        Recipe chocolateChipCookies = makeRecipe("Chocolate Chip Cookies", jane, 24,
                 10, 12,
                 "Mix butter, sugar, and egg.;Add flour, baking powder, and chocolate chips.;" +
                         "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "https://www.allrecipes" +
@@ -171,7 +171,7 @@ public class InitializeController {
         return ingredient;
     }
 
-    private Recipe makeRecipe(String name, Integer servingSize, Integer prepTime, Integer cookingTime,
+    private Recipe makeRecipe(String name, ChefMindUser author, Integer servingSize, Integer prepTime, Integer cookingTime,
                               String instructions, String image, Category ... categories) {
         String[] parts = instructions.split(";");
         List<String> instructionList = new ArrayList<>(Arrays.asList(parts));
@@ -179,6 +179,7 @@ public class InitializeController {
         Recipe recipe = new Recipe();
 
         recipe.setName(name);
+        recipe.setAuthor(author);
         recipe.setServingSize(servingSize);
         recipe.setPrepTime(prepTime);
         recipe.setCookingTime(cookingTime);

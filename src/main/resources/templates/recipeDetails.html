@@ -43,6 +43,9 @@
 
         <div class="recipeInfoContainer">
             <div class="recipeInfo">
+                <p>Author: <span th:text="${recipe.author.username}"></span></p>
+            </div>
+            <div class="recipeInfo">
                 <p>Servings: <span th:text="${recipe.servingSize}"></span></p>
             </div>
             <div class="recipeInfo">

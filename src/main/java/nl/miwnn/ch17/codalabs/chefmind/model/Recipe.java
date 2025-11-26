@@ -22,6 +22,9 @@ public class Recipe {
     @NotNull(message = "Recipe name is required")
     private String name;
 
+    @ManyToOne
+    private ChefMindUser author;
+
     @NotNull(message = "Serving size is required")
     @Min(value = 1, message = "Serving size must be between 1 and 1000")
     @Max(value = 1000, message = "Serving size must be between 1 and 1000")
@@ -77,6 +80,14 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ChefMindUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(ChefMindUser author) {
+        this.author = author;
     }
 
     public Integer getServingSize() {

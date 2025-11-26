@@ -1,9 +1,6 @@
 package nl.miwnn.ch17.codalabs.chefmind.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +25,8 @@ public class ChefMindUser implements UserDetails {
 
     private String password;
 
-
+    @OneToMany(mappedBy = "author")
+    private List<Recipe> recipes;
 
     public Long getUserId() {
         return userId;
@@ -79,5 +77,13 @@ public class ChefMindUser implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }

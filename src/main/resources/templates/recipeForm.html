@@ -13,6 +13,7 @@
 
     <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" class="recipeForm" enctype="multipart/form-data">
         <input type="hidden" th:field="*{recipeId}">
+        <input type="hidden" th:field="*{author.userId}" />
 
         <div class="row g-3 recipeFormField">
             <div class="col-md-9">

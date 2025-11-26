@@ -1,11 +1,13 @@
 package nl.miwnn.ch17.codalabs.chefmind.controller;
 
 import jakarta.validation.Valid;
+import nl.miwnn.ch17.codalabs.chefmind.model.ChefMindUser;
 import nl.miwnn.ch17.codalabs.chefmind.model.Ingredient;
 import nl.miwnn.ch17.codalabs.chefmind.model.IngredientUse;
 import nl.miwnn.ch17.codalabs.chefmind.model.Recipe;
 import nl.miwnn.ch17.codalabs.chefmind.repositories.*;
 import nl.miwnn.ch17.codalabs.chefmind.service.ImageService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,8 +50,10 @@ public class RecipeController {
     }
 
     @GetMapping("/new")
-    public String showNewRecipeForm(Model datamodel) {
-        return showRecipeForm(datamodel, new Recipe());
+    public String showNewRecipeForm(Model datamodel, @AuthenticationPrincipal ChefMindUser loggedInUser) {
+        Recipe newRecipe = new Recipe();
+        newRecipe.setAuthor(loggedInUser);
+        return showRecipeForm(datamodel, newRecipe);
     }
 
     @GetMapping("/edit/{name}")
@@ -63,9 +67,17 @@ public class RecipeController {
         return "redirect:/recipe/all";
     }
 
+    public String showRecipeForm(Model datamodel, Recipe recipe) {
+        datamodel.addAttribute("formRecipe", recipe);
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
+
+        return "recipeForm";
+    }
+
     @PostMapping("/save")
     public String saveOrUpdateRecipe(@ModelAttribute("formRecipe") @Valid Recipe recipeToBeSaved,
                                      BindingResult result, Model datamodel,
+                                     @AuthenticationPrincipal ChefMindUser loggedInUser,
                       @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
                       @RequestParam(value = "amounts[]", required = false) List<String> amounts,
                       @RequestParam(value = "quantitiesInGrams[]", required = false) List<Integer> quantitiesInGrams,
@@ -87,6 +99,8 @@ public class RecipeController {
         List<IngredientUse> ingredientUses = makeIngredientUses(recipeToBeSaved, ingredientNames, amounts,
                 quantitiesInGrams, kcalPer100gList);
         recipeToBeSaved.setIngredientUses(ingredientUses);
+
+        recipeToBeSaved.setAuthor(loggedInUser);
 
         recipeRepository.save(recipeToBeSaved);
         return "redirect:/recipe/detail/" + recipeToBeSaved.getName();
@@ -196,12 +210,5 @@ public class RecipeController {
         results.addAll(categoryResults);
 
         return results;
-    }
-
-    public String showRecipeForm(Model datamodel, Recipe recipe) {
-        datamodel.addAttribute("formRecipe", recipe);
-        datamodel.addAttribute("allCategories", categoryRepository.findAll());
-
-        return "recipeForm";
     }
 }

@@ -29,7 +29,6 @@ public class ImageService {
 
         MediaType contentType = MediaType.IMAGE_JPEG;
         if (file.getContentType() != null) {
-            // TODO: Filter to only allow image types
             contentType = MediaType.parseMediaType(file.getContentType());
         }
 

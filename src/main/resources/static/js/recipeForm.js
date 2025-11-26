@@ -5,20 +5,23 @@ addIngredientButton.addEventListener("click", function () {
     const ingredientLine = document.createElement("div");
     ingredientLine.innerHTML = `
       <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input type="text" class="form-control" name="ingredientNames[]" placeholder="Ingredient">
         </div>
-        <div class="col">
-            <input type="text" class="form-control" name="amounts[]" placeholder="Amount">
+        <div class="col-md-2">
+            <input type="text" class="form-control" name="quantities[]" placeholder="Quantity">
         </div>
-        <div class="col">
+        <div class="col-md-2">
+            <input type="text" class="form-control" name="units[]" placeholder="Unit">
+        </div>
+        <div class="col-md-2">
             <input type="number" class="form-control" name="quantitiesInGrams[]">
         </div>
-        <div class="col">
+        <div class="col-md-2">
             <input type="number" class="form-control" name="kcalPer100g[]">
         </div>
         <div class="col">
-            <button type="button" class="remove"><i class="bi bi-trash-fill"></i> Remove</button>
+            <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
         </div>
       </div>
     `;
@@ -34,11 +37,11 @@ addInstructionButton.addEventListener("click", function () {
 
     instructionLine.innerHTML = `
         <div class="row g-3">
-            <div class="col-md-10">
+            <div class="col-md-11">
                 <input type="text" class="form-control" placeholder="Add a step" name="instructions[${count}]">
             </div>
             <div class="col">
-                <button type="button" class="remove"><i class="bi bi-trash-fill"></i> Remove</button>
+                <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
             </div>
           </div>
     `;

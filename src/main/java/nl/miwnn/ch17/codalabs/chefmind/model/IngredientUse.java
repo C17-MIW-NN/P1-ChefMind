@@ -17,7 +17,8 @@ public class IngredientUse {
     @GeneratedValue
     private Long ingredientUseId;
 
-    private String amount;
+    private Double quantityInUnit;
+    private String unit;
     private Integer quantityInGrams;
 
     @ManyToOne
@@ -42,12 +43,20 @@ public class IngredientUse {
         this.ingredientUseId = ingredientUseId;
     }
 
-    public String getAmount() {
-        return amount;
+    public Double getQuantityInUnit() {
+        return quantityInUnit;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setQuantityInUnit(Double quantityInUnit) {
+        this.quantityInUnit = quantityInUnit;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public Integer getQuantityInGrams() {

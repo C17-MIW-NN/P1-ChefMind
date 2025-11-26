@@ -91,8 +91,8 @@ public class InitializeController {
                         "Top off with another piece of bread. Voilà!",
                 "https://californiaavocado.com/wp-content/uploads/2023/04/" +
                         "AvoBaconGrilledCheese_0011-scaled-e1682914545487.jpg", lunch);
-        makeIngredientUse(cheeseSandwich, cheese, "2 slices", 100);
-        makeIngredientUse(cheeseSandwich, bread, "2 pieces", 50);
+        makeIngredientUse(cheeseSandwich, cheese, 2.0, "slices", 100);
+        makeIngredientUse(cheeseSandwich, bread, 2.0, "pieces", 50);
 
         Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", john, 4, 10, 25,
                 "Sauté onion, garlic, and minced beef until browned. " +
@@ -100,13 +100,13 @@ public class InitializeController {
                         "Serve over cooked spaghetti and top with Parmesan.",
                 "https://supervalu.ie/image/var/files/real-food/recipes/Uploaded-2020/" +
                         "spaghetti-bolognese-recipe.jpg", dinner, italian);
-        makeIngredientUse(spaghettiBolognese, onion, "1", 100);
-        makeIngredientUse(spaghettiBolognese, garlic, "2 cloves", 10);
-        makeIngredientUse(spaghettiBolognese, salt, "to taste", 2);
-        makeIngredientUse(spaghettiBolognese, pepper, "dash", 2);
-        makeIngredientUse(spaghettiBolognese, spaghetti, "4 portions", 350);
-        makeIngredientUse(spaghettiBolognese, tomato, "5", 400);
-        makeIngredientUse(spaghettiBolognese, tomatoPaste, "2 table spoons", 10);
+        makeIngredientUse(spaghettiBolognese, onion, 1.0, "piece", 100);
+        makeIngredientUse(spaghettiBolognese, garlic, 2.0, "cloves", 10);
+        makeIngredientUse(spaghettiBolognese, salt, 1.0, "to taste", 2);
+        makeIngredientUse(spaghettiBolognese, pepper, 1.0, "dash", 2);
+        makeIngredientUse(spaghettiBolognese, spaghetti, 4.0, "portions", 350);
+        makeIngredientUse(spaghettiBolognese, tomato, 5.0, "pieces", 400);
+        makeIngredientUse(spaghettiBolognese, tomatoPaste, 2.5, "table spoons", 10);
 
         Recipe vegetableSoup = makeRecipe("Vegetable Soup", john, 6, 10, 30,
                 "Sauté onion, carrot, and celery.;Add diced tomatoes, broth, and seasonings.;" +
@@ -115,10 +115,10 @@ public class InitializeController {
                         "0x512/filters:no_upscale():max_bytes(150000):strip_icc()/" +
                         "13338-quick-and-easy-vegetable-soup-DDMFS-4x3-402702f59e7a41519515cecccaba1b80.jpg",
                 lunch, soups, vegetarian);
-        makeIngredientUse(vegetableSoup, onion, "1", 100);
-        makeIngredientUse(vegetableSoup, carrot, "3", 400);
-        makeIngredientUse(vegetableSoup, celery, "4 stalks", 400);
-        makeIngredientUse(vegetableSoup, broth, "1 liter", 1000);
+        makeIngredientUse(vegetableSoup, onion, 1.0, "piece", 100);
+        makeIngredientUse(vegetableSoup, carrot, 3.0, "pieces", 400);
+        makeIngredientUse(vegetableSoup, celery, 4.0, "stalks", 400);
+        makeIngredientUse(vegetableSoup, broth, 1.0, "liter", 1000);
 
         Recipe pancakes = makeRecipe("Pancakes", jane, 4, 5, 15,
                 "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter.;" +
@@ -126,10 +126,10 @@ public class InitializeController {
                 "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
                         "bdbc3ce86f919fb2dcf45204579802a8/Derivates/596b2aed41a777a097e3dd5917f8381d557e0ee7.jpg",
                 breakfast);
-        makeIngredientUse(pancakes, flour, "150g", 150);
-        makeIngredientUse(pancakes, bakingPowder, "10g", 10);
-        makeIngredientUse(pancakes, sugar, "25g", 25);
-        makeIngredientUse(pancakes, egg, "1", 100);
+        makeIngredientUse(pancakes, flour, 150.0, "g", 150);
+        makeIngredientUse(pancakes, bakingPowder, 10.0, "g", 10);
+        makeIngredientUse(pancakes, sugar, 25.0, "g", 25);
+        makeIngredientUse(pancakes, egg, 1.0, "piece", 100);
 
         Recipe chocolateChipCookies = makeRecipe("Chocolate Chip Cookies", jane, 24,
                 10, 12,
@@ -138,7 +138,7 @@ public class InitializeController {
                         ".com/thmb/dNzzgeEyacuH-RIfMI4PjWFODBM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc" +
                         "()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
                         "ddmfs-4x3-614164ea044a4845b3cca7e725ecf7bd.jpg", cookies, favourites);
-        makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams", 150);
+        makeIngredientUse(chocolateChipCookies, chocolateChips, 1.0, "cup", 150);
     }
 
     private ChefMindUser makeUser(String username, String password) {
@@ -194,13 +194,14 @@ public class InitializeController {
         return recipe;
     }
 
-    private IngredientUse makeIngredientUse(Recipe recipe, Ingredient ingredient, String amount,
+    private IngredientUse makeIngredientUse(Recipe recipe, Ingredient ingredient, Double quantityInUnit, String unit,
                                             Integer quantityInGrams) {
         IngredientUse ingredientUse = new IngredientUse();
 
         ingredientUse.setRecipe(recipe);
         ingredientUse.setIngredient(ingredient);
-        ingredientUse.setAmount(amount);
+        ingredientUse.setQuantityInUnit(quantityInUnit);
+        ingredientUse.setUnit(unit);
         ingredientUse.setQuantityInGrams(quantityInGrams);
 
         ingredientUseRepository.save(ingredientUse);

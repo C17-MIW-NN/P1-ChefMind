@@ -27,6 +27,10 @@ public class IngredientUse {
     private Recipe recipe;
 
     public Double calculateKcalIngredientUse() {
+        if (quantityInGrams < 0 || ingredient.getKcalPer100g() < 0) {
+            throw new IllegalArgumentException("cannot have negative quantities or Kcal per 100g");
+        }
+
         return quantityInGrams * (ingredient.getKcalPer100g() / QUANTITY_GRAMS_FOR_CALCULATING_KCAL);
     }
 

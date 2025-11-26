@@ -180,10 +180,12 @@ public class RecipeController {
         List<Recipe> titleResults = recipeRepository.findByNameContainingIgnoreCase(query);
         List<Recipe> ingredientResults =
                 recipeRepository.findDistinctByIngredientUses_Ingredient_IngredientNameIgnoreCase(query);
+        List<Recipe> categoryResults = recipeRepository.findDistinctByCategories_CategoryNameIgnoreCase(query);
 
         Set<Recipe> results = new HashSet<>();
         results.addAll(titleResults);
         results.addAll(ingredientResults);
+        results.addAll(categoryResults);
 
         return results;
     }

@@ -20,7 +20,8 @@
                           sec:authorize="isAuthenticated()">
                         <input type="hidden" th:field="*{categoryId}">
 
-                        <input placeholder="New category" class="formField" type="text" th:field="*{categoryName}" required>
+                        <input placeholder="New category" class="formField" type="text"
+                               th:field="*{categoryName}" required>
                         <input class="categoryFormButton" type="submit" value="Add">
                     </form>
 

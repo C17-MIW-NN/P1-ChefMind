@@ -28,7 +28,8 @@ public class InitializeController {
     public InitializeController(CategoryRepository categoryRepository,
                                 RecipeRepository recipeRepository,
                                 IngredientRepository ingredientRepository,
-                                IngredientUseRepository ingredientUseRepository, ChefMindUserService chefMindUserService) {
+                                IngredientUseRepository ingredientUseRepository,
+                                ChefMindUserService chefMindUserService) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
@@ -94,7 +95,8 @@ public class InitializeController {
         makeIngredientUse(cheeseSandwich, cheese, "2 slices", 100);
         makeIngredientUse(cheeseSandwich, bread, "2 pieces", 50);
 
-        Recipe spaghettiBolognese = makeRecipe("Spaghetti Bolognese", john, 4, 10, 25,
+        Recipe spaghettiBolognese = makeRecipe(
+                "Spaghetti Bolognese", john, 4, 10, 25,
                 "Sauté onion, garlic, and minced beef until browned. " +
                         "Add tomato paste, crushed tomatoes, herbs, salt, and pepper.;Simmer 30 minutes.;" +
                         "Serve over cooked spaghetti and top with Parmesan.",
@@ -123,7 +125,8 @@ public class InitializeController {
         Recipe pancakes = makeRecipe("Pancakes", jane, 4, 5, 15,
                 "Mix flour, baking powder, sugar, milk, egg, and butter into a smooth batter.;" +
                         "Cook on a greased pan until bubbles form.;Flip and cook until golden.;Serve with syrup.",
-                "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
+                "https://assets.tmecosys.com/image/" +
+                        "upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/" +
                         "bdbc3ce86f919fb2dcf45204579802a8/Derivates/596b2aed41a777a097e3dd5917f8381d557e0ee7.jpg",
                 breakfast);
         makeIngredientUse(pancakes, flour, "150g", 150);
@@ -134,9 +137,10 @@ public class InitializeController {
         Recipe chocolateChipCookies = makeRecipe("Chocolate Chip Cookies", jane, 24,
                 10, 12,
                 "Mix butter, sugar, and egg.;Add flour, baking powder, and chocolate chips.;" +
-                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.", "https://www.allrecipes" +
-                        ".com/thmb/dNzzgeEyacuH-RIfMI4PjWFODBM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc" +
-                        "()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
+                        "Drop spoonfuls on a tray and bake at 175°C for 10–12 minutes.",
+                "https://www.allrecipes" +
+                        ".com/thmb/dNzzgeEyacuH-RIfMI4PjWFODBM=/1500x0/filters:no_upscale():" +
+                        "max_bytes(150000):strip_icc()/AR-9996-chewy-peanut-butter-chocolate-chip-cookies-" +
                         "ddmfs-4x3-614164ea044a4845b3cca7e725ecf7bd.jpg", cookies, favourites);
         makeIngredientUse(chocolateChipCookies, chocolateChips, "150 grams", 150);
     }
@@ -171,8 +175,8 @@ public class InitializeController {
         return ingredient;
     }
 
-    private Recipe makeRecipe(String name, ChefMindUser author, Integer servingSize, Integer prepTime, Integer cookingTime,
-                              String instructions, String imageURL, Category ... categories) {
+    private Recipe makeRecipe(String name, ChefMindUser author, Integer servingSize, Integer prepTime,
+                              Integer cookingTime, String instructions, String imageURL, Category ... categories) {
         String[] parts = instructions.split(";");
         List<String> instructionList = new ArrayList<>(Arrays.asList(parts));
 

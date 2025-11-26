@@ -11,7 +11,8 @@
         <h1 class="h1-form" th:unless="${formRecipe.recipeId == null}" th:text="|Edit ${formRecipe.name}|"></h1>
     </div>
 
-    <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" class="recipeForm" enctype="multipart/form-data">
+    <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}"
+          class="recipeForm" enctype="multipart/form-data">
         <input type="hidden" th:field="*{recipeId}">
         <input type="hidden" th:field="*{author.userId}" />
 

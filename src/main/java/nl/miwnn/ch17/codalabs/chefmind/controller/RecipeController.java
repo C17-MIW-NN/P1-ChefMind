@@ -32,12 +32,13 @@ public class RecipeController {
     private final ImageRepository imageRepository;
 
     public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                            CategoryRepository categoryRepository, ImageRepository imageRepository, ImageService imageService, ImageRepository imageRepository1) {
+                            CategoryRepository categoryRepository, ImageRepository imageRepository,
+                            ImageService imageService) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.categoryRepository = categoryRepository;
         this.imageService = imageService;
-        this.imageRepository = imageRepository1;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/new")

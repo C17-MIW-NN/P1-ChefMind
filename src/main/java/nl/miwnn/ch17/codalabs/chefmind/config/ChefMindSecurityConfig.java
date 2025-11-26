@@ -24,6 +24,7 @@ public class ChefMindSecurityConfig {
                         .requestMatchers("/", "/recipe/all", "/recipe/detail/*", "/recipe/search").permitAll()
                         .requestMatchers("/category/*", "/image/**").permitAll()
                         .requestMatchers("/css/**", "/webjars/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)

@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * @author Assib Pajman
- *
+ * Configures the security for the ChefMind application
  */
 @Configuration
 @EnableWebSecurity

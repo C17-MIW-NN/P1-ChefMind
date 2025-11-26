@@ -39,14 +39,6 @@ public class RecipeController {
         this.imageRepository = imageRepository1;
     }
 
-    @GetMapping("/all")
-    public String showRecipeOverview(Model datamodel) {
-        datamodel.addAttribute("recipes", recipeRepository.findAll());
-        datamodel.addAttribute("formRecipe", new Recipe());
-
-        return "recipeOverview";
-    }
-
     @GetMapping("/new")
     public String showNewRecipeForm(Model datamodel) {
         return showRecipeForm(datamodel, new Recipe());

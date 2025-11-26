@@ -1,85 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 
-<head     th:replace="~{fragments/general :: baseheader(~{:: title})}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+    <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
+    <link rel="stylesheet" type="text/css" href="/css/recipeOverview.css" />
     <title>Your Categories</title>
-
 </head>
 
 <body>
+    <div>
+        <div th:replace="~{fragments/general :: navbar}"></div>
+        <div class="contentContainer">
+            <div class="leftContainer">
+                <div class="innerContainer">
+                    <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}"
+                          sec:authorize="isAuthenticated()">
+                        <input type="hidden" th:field="*{categoryId}">
 
-<div th:replace="~{fragments/general :: navbar}"></div>
-
-<div class="contentContainer">
-
-    <div class="leftContainer">
-
-        <div class="innerContainer">
-            <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}"
-                  sec:authorize="isAuthenticated()">
-                <input type="hidden" th:field="*{categoryId}">
-
-                <input placeholder="New category" class="formField" type="text" th:field="*{categoryName}" required>
-                <input class="categoryFormButton" type="submit" value="Add">
-            </form>
-
-            <hr>
-
-            <p class="categoryLabel">Categories</p>
-
-            <a class="categoryButton"
-               th:href="@{/category/all}"
-               th:classappend="${activeCategory} == null ? ' active' : ''">All recipes</a>
-
-            <div class="categoryButtonContainer" th:each="category : ${allCategories}">
-                <a class="categoryButton"
-                   th:href="@{/category/{name}(name=${category.categoryName})}"
-                   th:text="${category.categoryName}"
-                   th:classappend="${activeCategory} == ${category.categoryName} ? ' active' : ''"></a>
-
-                <a class="categoryButtonRemove bi bi-trash3" sec:authorize="isAuthenticated()"
-                   data-bs-toggle="modal"
-                   data-bs-target="#deleteModal"
-                   th:attr="data-id=${category.categoryId}"></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete category?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" style="text-align: center">
-                    <form id="deleteForm" method="get">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <input placeholder="New category" class="formField" type="text" th:field="*{categoryName}" required>
+                        <input class="categoryFormButton" type="submit" value="Add">
                     </form>
+
+                    <hr>
+
+                    <p class="categoryLabel">Categories</p>
+
+                    <a class="categoryButton"
+                       th:href="@{/category/all}"
+                       th:classappend="${activeCategory} == null ? ' active' : ''">All recipes</a>
+
+                    <div class="categoryButtonContainer" th:each="category : ${allCategories}">
+                        <a class="categoryButton"
+                           data-category="${category.categoryId}"
+                           th:href="@{/category/{name}(name=${category.categoryName})}"
+                           th:text="${category.categoryName}"
+                           th:classappend="${activeCategory} == ${category.categoryName} ? ' active' : ''"></a>
+
+                        <a class="categoryButtonRemove bi bi-trash3"
+                           sec:authorize="isAuthenticated()"
+                           th:if="${activeCategory} == ${category.categoryName}"
+                           data-category="${category.categoryId}"
+                           data-bs-toggle="modal"
+                           data-bs-target="#deleteModal"
+                           th:attr="data-id=${category.categoryId}"></a>
+                    </div>
                 </div>
+            </div>
+
+            <div class="modal fade" id="deleteModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete category?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: center">
+                            <form id="deleteForm" method="get">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightContainer">
+                <div>
+                    <h1 class="h1Category"><span th:text="${activeCategory} ?: 'All recipes'"></span></h1>
+                </div>
+
+                <div th:replace="~{fragments/general :: recipeCards}"></div>
             </div>
         </div>
     </div>
 
-    <div class="rightContainer">
-        <div>
-            <h1 class="h1Category"><span th:text="${activeCategory} ?: 'All recipes'"></span></h1>
-        </div>
+    <button onclick="topFunction()"
+            class="footerButton bi bi-arrow-up-square-fill"
+            id="footerbutton"
+            title="Go to top"></button>
+</body>
 
-        <div th:replace="~{fragments/general :: recipeCards}"></div>
-    </div>
-
-</div>
-
-
-
-
-<div class="footer">
+<footer>
+    <script src="/js/categoryOverview.js"></script>
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
-</div>
+</footer>
 
-<script src="/js/categoryOverview.js"></script>
-</body>
 </html>

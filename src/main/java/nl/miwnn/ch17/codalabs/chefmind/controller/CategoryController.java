@@ -46,7 +46,8 @@ public class CategoryController {
         if (category.isEmpty()) {
             datamodel.addAttribute("recipes", recipeRepository.findAll());
         } else {
-            List<Recipe> recipesPerCategory = recipeRepository.findByCategories_CategoryId(category.get().getCategoryId());
+            List<Recipe> recipesPerCategory =
+                    recipeRepository.findByCategories_CategoryId(category.get().getCategoryId());
 
             datamodel.addAttribute("recipes", recipesPerCategory);
             datamodel.addAttribute("activeCategory", name);
@@ -108,7 +109,9 @@ public class CategoryController {
         return null;
     }
 
-    private static String checkForSameName(Category categoryToBeSaved, BindingResult result, Optional<Category> categoryWithSameName) {
+    private static String checkForSameName(Category categoryToBeSaved,
+                                           BindingResult result,
+                                           Optional<Category> categoryWithSameName) {
         if (categoryWithSameName.isPresent() &&
                 !categoryWithSameName.get().getCategoryId().equals(categoryToBeSaved.getCategoryId())) {
             result.addError(new FieldError("formCategory", "categoryName",

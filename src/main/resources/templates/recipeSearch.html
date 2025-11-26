@@ -12,7 +12,7 @@
         <div th:each="recipe : ${recipes}">
             <a th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" class="hyperlink-card">
                 <div class="recipe-card">
-                    <img th:src="${recipe.image}" alt="nothing">
+                    <img th:src="${recipe.imageURL}" alt="nothing">
                     <div class="recipe-info">
                         <h3 th:text="${recipe.name}"></h3>
                         <h4><i class="bi bi-people-fill" style="font-size: 1.1rem;"></i></i></i>️

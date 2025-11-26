@@ -11,7 +11,7 @@
 
 <body>
 <div class="imageBackground">
-    <img class="imageInBackground" th:src="${recipe.image}" alt="nothing">
+    <img class="imageInBackground" th:src="${recipe.imageURL}" alt="nothing">
 </div>
 
 <nav class="navbar">
@@ -19,9 +19,6 @@
     <div class="navbar-items">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/category/all}">Categories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/recipe/all}">Recipes</a>
             </li>
     </div>
 </nav>
@@ -33,9 +30,6 @@
             <div class="editRemove" sec:authorize="isAuthenticated()">
                 <a class="edit" th:href="@{/recipe/edit/{name}(name = ${recipe.name})}">
                     <i class="bi bi-pencil-fill"></i> Edit</a>
-                <button class="remove" data-bs-toggle="modal" data-bs-target="#recipeModal">
-                    <i class="bi bi-trash-fill"></i>Remove</button>
-
                 <a class="remove" th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.recipeId})}">
                     <i class="bi bi-trash-fill"></i> Remove</a>
             </div>

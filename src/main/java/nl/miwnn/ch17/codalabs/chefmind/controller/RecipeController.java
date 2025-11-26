@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.*;
@@ -104,7 +103,7 @@ public class RecipeController {
                 if (!imageRepository.existsByFileName(recipeImage.getOriginalFilename())) {
                     imageService.saveImage(recipeImage);
                 }
-                recipeToBeSaved.setImage("/image/" + recipeImage.getOriginalFilename());
+                recipeToBeSaved.setImageURL("/image/" + recipeImage.getOriginalFilename());
             }
         } catch (IOException imageError) {
             result.rejectValue("recipeImage", "imageNotSaved", "Image not saved");

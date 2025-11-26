@@ -38,7 +38,7 @@ public class Recipe {
     @PositiveOrZero(message = "Cooking time cannot be negative")
     private Integer cookingTime;
 
-    private String image = "https://arthurmillerfoundation.org/wp-content/uploads/2018/06/default-placeholder.png";
+    private String imageURL = "https://arthurmillerfoundation.org/wp-content/uploads/2018/06/default-placeholder.png";
 
     @ElementCollection
     @Column(columnDefinition = "TEXT")
@@ -114,12 +114,12 @@ public class Recipe {
         this.cookingTime = cookingTime;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public List<String> getInstructions() {

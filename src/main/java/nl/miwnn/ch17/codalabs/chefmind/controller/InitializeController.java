@@ -172,7 +172,7 @@ public class InitializeController {
     }
 
     private Recipe makeRecipe(String name, ChefMindUser author, Integer servingSize, Integer prepTime, Integer cookingTime,
-                              String instructions, String image, Category ... categories) {
+                              String instructions, String imageURL, Category ... categories) {
         String[] parts = instructions.split(";");
         List<String> instructionList = new ArrayList<>(Arrays.asList(parts));
 
@@ -184,7 +184,7 @@ public class InitializeController {
         recipe.setPrepTime(prepTime);
         recipe.setCookingTime(cookingTime);
         recipe.setInstructions(instructionList);
-        recipe.setImage(image);
+        recipe.setImageURL(imageURL);
 
         List<Category> categoryList= new ArrayList<>(Arrays.asList(categories));
         recipe.setCategories(categoryList);

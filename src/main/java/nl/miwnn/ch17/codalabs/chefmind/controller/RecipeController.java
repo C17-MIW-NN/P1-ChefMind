@@ -71,7 +71,8 @@ public class RecipeController {
                                      BindingResult result, Model datamodel,
                                      @AuthenticationPrincipal ChefMindUser loggedInUser,
                       @RequestParam(value = "ingredientNames[]", required = false) List<String> ingredientNames,
-                      @RequestParam(value = "amounts[]", required = false) List<String> amounts,
+                      @RequestParam(value = "quantities[]", required = false) List<Double> quantitiesInUnit,
+                      @RequestParam(value = "units[]", required = false) List<String> units,
                       @RequestParam(value = "quantitiesInGrams[]", required = false) List<Integer> quantitiesInGrams,
                       @RequestParam(value = "kcalPer100g[]", required = false) List<Integer> kcalPer100gList,
                       @RequestParam MultipartFile recipeImage) {
@@ -88,8 +89,8 @@ public class RecipeController {
             ingredientNames = new ArrayList<>();
         }
 
-        List<IngredientUse> ingredientUses = makeIngredientUses(recipeToBeSaved, ingredientNames, amounts,
-                quantitiesInGrams, kcalPer100gList);
+        List<IngredientUse> ingredientUses = makeIngredientUses(recipeToBeSaved, ingredientNames,
+                quantitiesInUnit, units, quantitiesInGrams, kcalPer100gList);
         recipeToBeSaved.setIngredientUses(ingredientUses);
 
         recipeToBeSaved.setAuthor(loggedInUser);
@@ -112,12 +113,14 @@ public class RecipeController {
     }
 
     private List<IngredientUse> makeIngredientUses(Recipe recipeToBeSaved, List<String> ingredientNames,
-                                                   List<String> amounts, List<Integer> quantitiesInGrams,
-                                                   List<Integer> kcalPer100gList) {
+                                                   List<Double> quantitiesInUnit, List<String> units,
+                                                   List<Integer> quantitiesInGrams, List<Integer> kcalPer100gList) {
         List<IngredientUse> ingredientUses = new ArrayList<>();
         for (int ingredientIndex = 0; ingredientIndex < ingredientNames.size(); ingredientIndex++) {
             String ingredientName = ingredientNames.get(ingredientIndex);
-            String amount = amounts.size() > ingredientIndex ? amounts.get(ingredientIndex) : "";
+            Double quantityInUnit = quantitiesInUnit.size() > ingredientIndex &&
+                    quantitiesInUnit.get(ingredientIndex) != null ? quantitiesInUnit.get(ingredientIndex) : 0;
+            String unit = units.size() > ingredientIndex ? units.get(ingredientIndex) : "";
             Integer quantityInGrams = quantitiesInGrams.size() > ingredientIndex &&
                     quantitiesInGrams.get(ingredientIndex) != null ? quantitiesInGrams.get(ingredientIndex) : 0;
             Integer kcalPer100g = kcalPer100gList.size() > ingredientIndex &&
@@ -126,7 +129,8 @@ public class RecipeController {
             IngredientUse use = new IngredientUse();
 
             useExistingIngredientOrMakeNewIngredient(ingredientName, kcalPer100g, use);
-            use.setAmount(amount);
+            use.setQuantityInUnit(quantityInUnit);
+            use.setUnit(unit);
             use.setRecipe(recipeToBeSaved);
             use.setQuantityInGrams(quantityInGrams);
 

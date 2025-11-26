@@ -69,14 +69,16 @@
                 <thead class="ingredientTableHead">
                 <tr>
                     <td>Ingredient</td>
-                    <td>Amount</td>
+                    <td>Quantity</td>
+                    <td>Unit</td>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
                     <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
-                    <td th:text="${ingredientUse.amount}"></td>
+                    <td th:text="${ingredientUse.quantityInUnit}"></td>
+                    <td th:text="${ingredientUse.unit}"></td>
                 </tr>
                 </tbody>
             </table>

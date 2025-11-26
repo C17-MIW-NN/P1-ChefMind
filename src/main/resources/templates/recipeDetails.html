@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Recipe details</title>
 
-<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">-->
+
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" type="text/css" href="/css/chefmind.css" />
 </head>
@@ -15,11 +15,30 @@
 </div>
 
 <nav class="navbar">
-    <a class="nav-brand" th:href="@{/category/all}">ChefMind</a>
     <div class="navbar-items">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/category/all}">Categories</a>
-            </li>
+        <a class="nav-brand" th:href="@{/category/all}">ChefMind</a>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/category/all}">Recipes</a>
+        </li>
+    </div>
+    <div class="navbar-items">
+        <li class="nav-item">
+            <form th:action="@{/recipe/search}" method="get">
+                <div>
+                    <input type="search" name="query" placeholder="Look for recipe"/>
+                    <button type="submit" class="search-button">Search</button>
+                </div>
+            </form>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/user/all}">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+            <a class="nav-link"
+               sec:authorize="isAuthenticated()"
+               th:href="@{/logout}">Logout <span sec:authentication="name"></span></a>
+        </li>
     </div>
 </nav>
 
@@ -63,41 +82,37 @@
         </div>
     </div>
 
-    <div class="recipeIngredientContainer">
+    <div>
         <div class="recipeIngredientInnerContainer">
             <table>
-                <thead class="ingredientTableHead">
                 <tr>
                     <td>Ingredient</td>
                     <td>Quantity</td>
                     <td>Unit</td>
                 </tr>
-                </thead>
-
-                <tbody>
                 <tr th:each="ingredientUse : ${recipe.getIngredientUses()}">
                     <td th:text="${ingredientUse.ingredient.ingredientName}"></td>
                     <td th:text="${ingredientUse.quantityInUnit}"></td>
                     <td th:text="${ingredientUse.unit}"></td>
                 </tr>
-                </tbody>
             </table>
 
-            <div>
-                <a><b>Instructions:</b></a>
+            <div class="recipeIngredientContainer">
+                <a>Instructions:</a>
                 <ol>
                     <li th:each="instruction: ${recipe.instructions}"
                         th:if="${!#strings.isEmpty(instruction)}"
                         th:text="${instruction}"></li>
                 </ol>
             </div>
-
         </div>
         <div th:replace="~{fragments/general :: footer}"></div>
     </div>
 </div>
 
-    <div th:replace="~{fragments/general :: bottomScripts}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
 
 </body>
+<footer>
+</footer>
 </html>

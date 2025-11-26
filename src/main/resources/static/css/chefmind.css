@@ -5,7 +5,6 @@ body {
     display: flex;
     min-height: 100vh;
     min-width: 100vw;
-    /*align-content: start;*/
     justify-content: space-between;
     flex-direction: column;
     background-color: #F6F1EC;
@@ -36,7 +35,6 @@ body {
 .leftContainer {
     display: flex;
     flex-direction: column;
-    /*align-items: center;*/
     padding-left: 12px;
     padding-top: 12px;
     min-height: 100%;
@@ -79,8 +77,6 @@ body {
 }
 
 .categoryButtonRemove:hover {
-/*    transform: translateY(-4px);*/
-/*    box-shadow: 0 4px 12px rgba(0,0,0,0.12);*/
     cursor: pointer;
 }
 
@@ -130,7 +126,7 @@ body {
 .navbar {
     display: flex;
     align-content: center;
-    justify-content: start;
+    justify-content: space-between;
     min-height: 5vh;
     min-width: 100%;
     padding-left: 12px;
@@ -254,16 +250,11 @@ body {
 }
 
 .search-button {
-    /*display: flex;*/
-    /*padding: 2px 12px;*/
     background-color: #1D6813;
     color: #F6F1EC;
     border-radius: 4px;
     border: none;
-    /*text-decoration: none;*/
-    /*margin-right: 12px;*/
-    /*margin-top: 8px;*/
-    /*box-shadow: none;*/
+    cursor: pointer;
 }
 
 /* Page | recipeDetails */
@@ -334,7 +325,6 @@ body {
 }
 
 .imageBackground {
-    /*display: flex;*/
     position: absolute;
     height: 100vh;
     z-index: -1;
@@ -350,15 +340,14 @@ body {
 
 .recipeIngredientContainer {
     display: flex;
-    min-width: auto;
-    height: 280px;
+    width: 600px;
+    height: auto;
     padding: 12px;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     border: 1px solid #1D6813;
     background-color: #F6F1EC;
     font-family: "Microsoft Sans Serif";
-    font-weight: 100;
 }
 
 .recipeIngredientInnerContainer {
@@ -370,6 +359,21 @@ body {
 
 .ingredientTableHead {
     margin-bottom: 12px;
+    text-decoration: underline;
+
+}
+
+table {
+    padding: 0px;
+    width: 40vh;
+}
+
+th, td {
+    border: 1px solid #1D6813;
+    padding: 12px;
+    margin: 12px;
+    background-color: #F6F1EC;
+    font-family: "Microsoft Sans Serif";
 }
 
 .h1 {

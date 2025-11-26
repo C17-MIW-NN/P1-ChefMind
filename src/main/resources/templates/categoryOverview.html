@@ -19,8 +19,8 @@
                     <form class="categoryForm" th:action="@{/category/new}" method="post" th:object="${formCategory}"
                           sec:authorize="isAuthenticated()">
                         <input type="hidden" th:field="*{categoryId}">
-
-                        <input placeholder="New category" class="formField" type="text"
+                        <input placeholder="New category"
+                               class="formField" type="text"
                                th:field="*{categoryName}" required>
                         <input class="categoryFormButton" type="submit" value="Add">
                     </form>

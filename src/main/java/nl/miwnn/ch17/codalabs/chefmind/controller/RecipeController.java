@@ -56,7 +56,7 @@ public class RecipeController {
             return showRecipeForm(datamodel, optionalRecipe.get());
         }
 
-        return "redirect:/recipe/all";
+        return "redirect:/category/all";
     }
 
     public String showRecipeForm(Model datamodel, Recipe recipe) {
@@ -170,7 +170,7 @@ public class RecipeController {
     public String deleteRecipe(@PathVariable("recipeId") Long recipeId) {
         recipeRepository.deleteById(recipeId);
 
-        return "redirect:/recipe/all";
+        return "redirect:/category/all";
     }
 
     @GetMapping("/detail/{name}")
@@ -178,7 +178,7 @@ public class RecipeController {
         Optional<Recipe> recipeToShow = recipeRepository.findByName(name);
 
         if (recipeToShow.isEmpty()) {
-            return "redirect:/recipe/all";
+            return "redirect:/category/all";
         }
 
         datamodel.addAttribute("recipe", recipeToShow.get());

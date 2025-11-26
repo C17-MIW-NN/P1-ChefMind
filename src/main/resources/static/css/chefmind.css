@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
 }
+
 body {
     display: flex;
     min-height: 100vh;
@@ -10,6 +11,10 @@ body {
     background-color: #F6F1EC;
     color: #1D6813;
     margin: 0px;
+}
+
+body.different {
+    justify-content: normal;
 }
 
 /* Containers inside of the app */

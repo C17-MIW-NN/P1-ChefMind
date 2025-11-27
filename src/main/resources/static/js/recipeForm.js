@@ -5,7 +5,7 @@ addIngredientButton.addEventListener("click", function () {
     const ingredientLine = document.createElement("div");
     ingredientLine.innerHTML = `
       <div class="row g-3">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <input type="text" class="form-control" name="ingredientNames[]" placeholder="Ingredient">
         </div>
         <div class="col-md-2">
@@ -21,7 +21,7 @@ addIngredientButton.addEventListener("click", function () {
             <input type="number" class="form-control" name="kcalPer100g[]">
         </div>
         <div class="col">
-            <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
+            <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
         </div>
       </div>
     `;
@@ -37,11 +37,11 @@ addInstructionButton.addEventListener("click", function () {
 
     instructionLine.innerHTML = `
         <div class="row g-3">
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <input type="text" class="form-control" placeholder="Add a step" name="instructions[${count}]">
             </div>
             <div class="col">
-                <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
+                <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
             </div>
           </div>
     `;

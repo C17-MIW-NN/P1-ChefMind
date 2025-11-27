@@ -78,7 +78,7 @@
         <div class="recipeFormField">
             <div id="ingredients">
                 <div class="row g-3">
-                    <div class="col-md-3"><label class="form-label">Ingredient</label></div>
+                    <div class="col-md-2"><label class="form-label">Ingredient</label></div>
                     <div class="col-md-2"><label class="form-label">Quantity</label></div>
                     <div class="col-md-2"><label class="form-label">Unit</label></div>
                     <div class="col-md-2"><label class="form-label">Quantity in g/ml</label></div>
@@ -87,7 +87,7 @@
                 </div>
 
                 <div th:each="use : *{ingredientUses}" class="row g-3">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" class="form-control" name="ingredientNames[]"
                                th:value="${use.ingredient.ingredientName}" placeholder="Ingredient">
                     </div>
@@ -108,12 +108,12 @@
                         th:value="${use.ingredient.kcalPer100g}">
                     </div>
                     <div class="col">
-                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i>/button>
+                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
                     </div>
                 </div>
 
                 <div th:if="${#lists.isEmpty(formRecipe.ingredientUses)}" class="row g-3">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" class="form-control" name="ingredientNames[]" placeholder="Ingredient">
                     </div>
                     <div class="col-md-2">
@@ -129,7 +129,7 @@
                         <input type="number" class="form-control" name="kcalPer100g[]">
                     </div>
                     <div class="col">
-                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
+                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
                     </div>
                 </div>
             </div>
@@ -147,24 +147,24 @@
             <div id="instructions"
                  th:attr="data-count=${formRecipe.instructions != null ? formRecipe.instructions.size() : 1}">
                 <div th:each="existingInstruction, iteration : *{instructions}" class="row g-3">
-                    <div class="col-md-11">
+                    <div class="col-md-10">
                         <input type="text" class="form-control"
                                th:field="*{instructions[__${iteration.index}__]}"
                                th:placeholder="'Add a step'">
                     </div>
                     <div class="col">
-                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
+                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
                     </div>
                 </div>
 
                 <div th:if="${#lists.isEmpty(formRecipe.instructions)}" class="row g-3">
-                    <div class="col-md-11">
+                    <div class="col-md-10">
                         <input type="text" class="form-control"
                                th:field="*{instructions[__${0}__]}"
                                th:placeholder="'Add a step'">
                     </div>
                     <div class="col">
-                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i></button>
+                        <button type="button" class="remove"><i class="bi bi-trash-fill"></i>Remove</button>
                     </div>
                 </div>
             </div>
